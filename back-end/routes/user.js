@@ -1,7 +1,6 @@
 const express=require("express");
 const passport=require('passport');
-const { updateUser, resetPassword } = require("../Controllers/userController");
-const { login } = require("../Controllers/userController");
+const { login, forgetPassword } = require("../Controllers/userController");
 const { register } = require("../Controllers/userController");
 const router=express.Router();
 
@@ -14,6 +13,6 @@ router.get('/profile',
     res.json(req.user);
   });
 
-router.get('/reset-password',resetPassword);
+router.post('/forget-password',forgetPassword);
 
 module.exports=router;
