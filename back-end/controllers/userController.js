@@ -1,6 +1,7 @@
 const users = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 exports.register = async (req, res) => {
   try {
@@ -43,4 +44,67 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.forgetPassword = async (req, res) => {};
+exports.forgetPassword = async (req, res) => {
+  try {
+    const user = await users.findOne({ email: req.body.email });
+    if (user) {
+      const resetToken = randomString.generate(10);
+      const reset = {
+        userId: user._id,
+        token: resetToken,
+      };
+      await Token.create(reset);
+      const link = `${process.env.protocol}resetPassword/${resetToken}`;
+
+      let transporter = nodemailer.createTransport({
+        host: process.env.host,
+        port: process.env.port,
+        secure: false,
+        auth: {
+          user: process.env.email,
+          pass: process.env.password,
+        },
+      });
+
+      await transporter.sendMail({
+        from: `${process.env.email}`,
+        to: `${req.body.email}`,
+        subject: "Airbnb tunsi: Reset password",
+
+        html: `<h1>Hi, ${req.body.firsName} ${req.body.lastName} </h1> 
+      <p> You requested to reset your password,
+      Please click the link below </p> <br>
+       <a href="${link}">reset link</a>
+       <small style="color:red">This link is valid for 15minutes and one time usage.<small>
+      <p>Ignore if you didn't request this.</p>`,
+      });
+      res.status(200).send({ message: "link sent successfully" });
+    } else {
+      res.status(400).send({ message: `user not found!` });
+    }
+  } catch (error) {
+    res.status(500).send({ message: error.message || "erreur serveur" });
+  }
+};
+
+
+exports.resetPassword = async (req, res) => {
+  try {
+    const token = await Token.findOne({ token: req.params.token });
+    console.log(token.userId);
+    if (token) {
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(req.body.password, salt);
+      await Compte.findByIdAndUpdate(
+        token.userId,
+        { password: req.body.password, passwordHashed: hash },
+        { new: true }
+      );
+      res.status(200).send({ message: "password updated" });
+    } else {
+      res.status(400).send({ message: "token invalid" });
+    }
+  } catch (error) {
+    res.status(500).send({ message: error.message || "An error occured" });
+  }
+};
