@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
-const tokens=require("../models/token");
+const tokens = require("../models/token");
 
 exports.register = async (req, res) => {
   try {
@@ -51,7 +51,7 @@ exports.forgetPassword = async (req, res) => {
     const user = await users.findOne({ email: req.body.email });
 
     if (!user) {
-      throw new Error("User does not exist");
+      res.status(400).send({ message: "user does not exist !" });
     }
     let token = await tokens.findOne({ userId: user._id });
     if (token) {
@@ -71,29 +71,29 @@ exports.forgetPassword = async (req, res) => {
       token: hash,
       createdAt: Date.now(),
     });
-    const link = `${process.env.CLIENT_URL}/passwordReset?token=${resetToken}&id=${user._id}`;
+    const link = `${process.env.CLIENT_URL}users/passwordReset?token=${resetToken}&id=${user._id}`;
 
     let transporter = nodemailer.createTransport({
-      host: process.env.host,
-      port: process.env.port,
+      host: "smtp.gmail.com",
+      port: 587,
       secure: false,
       auth: {
-        user: process.env.email,
-        pass: process.env.password,
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
       },
     });
 
     await transporter.sendMail({
-      from: `${process.env.email}`,
-      to: `${req.body.email}`,
+      from: user.email,
+      to: process.env.EMAIL,
       subject: "Airbnb tunsi: Password reset request",
 
-      html: `<h1>Hi, ${req.body.firsName} ${req.body.lastName} </h1> 
+      html: `<h1>Hi, ${user.firstName} ${user.lastName} </h1> 
       <p> You requested to reset your password,
       Please click the link below </p> <br>
-       <a href="${link}">reset link</a>
-       <small style="color:red">This link is valid for 15minutes and one time usage.<small>
-      <p>Ignore if you didn't request this.</p>`,
+      <a href="http://${link}">Reset Password</a>
+       <p style="color:red">This link is valid for 15minutes and one time usage.<p>
+      <small>Ignore if you didn't request this.</small>`,
     });
     res.status(200).send({ message: "link sent successfully" });
   } catch (error) {
