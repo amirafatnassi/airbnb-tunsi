@@ -58,18 +58,9 @@ exports.forgetPassword = async (req, res) => {
       await tokens.deleteOne();
     }
     let resetToken = crypto.randomBytes(32).toString("hex");
-    const reset = {
-      userId: user._id,
-      token: resetToken,
-    };
-    await tokens.create(reset);
-
-    const hash = await bcrypt.hash(resetToken, Number(bcrypt));
-
     await tokens.create({
       userId: user._id,
-      token: hash,
-      createdAt: Date.now(),
+      token: resetToken,
     });
     const link = `${process.env.CLIENT_URL}users/passwordReset?token=${resetToken}&id=${user._id}`;
 
@@ -101,23 +92,23 @@ exports.forgetPassword = async (req, res) => {
   }
 };
 
-// exports.resetPassword = async (req, res) => {
-//   try {
-//     const token = await tokens.findOne({ token: req.params.token });
-//     console.log(token.userId);
-//     if (token) {
-//       const salt = bcrypt.genSaltSync(10);
-//       const hash = bcrypt.hashSync(req.body.password, salt);
-//       await Compte.findByIdAndUpdate(
-//         token.userId,
-//         { password: req.body.password, passwordHashed: hash },
-//         { new: true }
-//       );
-//       res.status(200).send({ message: "password updated" });
-//     } else {
-//       res.status(400).send({ message: "token invalid" });
-//     }
-//   } catch (error) {
-//     res.status(500).send({ message: error.message || "An error occured" });
-//   }
-// };
+exports.resetPassword = async (req, res) => {
+  try {
+    const user = await users.findOne({ email: req.body.email });
+
+    if (!user) throw new Error("User does not exist");
+    else {
+      const token = await tokens.findOne({ userId: user._id });
+      if (token) {
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(req.body.password, salt);
+        await users.findByIdAndUpdate(token.userId, { password: hash });
+        res.status(200).send({ message: "password updated" });
+      } else {
+        res.status(400).send({ message: "token invalid" });
+      }
+    }
+  } catch (error) {
+    res.status(500).send({ message: error.message || "An error occured" });
+  }
+};

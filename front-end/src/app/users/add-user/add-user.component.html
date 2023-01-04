@@ -1,0 +1,154 @@
+<div class="container">
+    <div class="card">
+      <div class="card-header">Register</div>
+      <div class="card-body">
+        <form
+          [formGroup]="userForm"
+          (ngSubmit)="onSubmitFormGroupe()"
+          *ngIf="userForm"
+        >
+          <div class="form-group row">
+            <div class="col-6">
+              <label for="prenom">Prénom</label>
+              <input
+                type="text"
+                [ngClass]="{
+                  'is-valid': validForm && !userForm.controls.prenom.errors,
+                  'is-invalid': validForm && userForm.controls.prenom.errors
+                }"
+                class="form-control"
+                id="prenom"
+                formControlName="prenom"
+                placeholder="prenom"
+                name="prenom"
+                ngModel
+              />
+              <div class="invalid-feedback">prenom obligatoire !</div>
+            </div>
+            <div class="col-6">
+              <label for="nom">Nom</label>
+              <input
+                type="text"
+                [ngClass]="{
+                  'is-valid': validForm && !userForm.controls.nom.errors,
+                  'is-invalid': validForm && userForm.controls.nom.errors
+                }"
+                class="form-control"
+                id="nom"
+                formControlName="nom"
+                placeholder="nom"
+                name="nom"
+                ngModel
+              />
+              <div class="invalid-feedback">nom obligatoire !</div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="dateNaissance">Date de naissance</label>
+            <input
+              type="date"
+              class="form-control"
+              id="dateNaissance"
+              formControlName="dateNaissance"
+              [ngClass]="{
+                'is-valid': validForm && !userForm.controls.dateNaissance.errors,
+                'is-invalid': validForm && userForm.controls.dateNaissance.errors
+              }"
+              placeHolder="dateNaissance"
+              name="dateNaissance"
+              ngModel
+            />
+            <div class="invalid-feedback">Date de naissance obligatoire !</div>
+          </div>
+          <div class="form-group">
+            <label for="tel">tel</label>
+            <input
+              type="phone"
+              class="form-control"
+              id="tel"
+              formControlName="tel"
+              [ngClass]="{
+                'is-valid': validForm && !userForm.controls.tel.errors,
+                'is-invalid': validForm && userForm.controls.tel.errors
+              }"
+              placeHolder="tel"
+              name="tel"
+              ngModel
+            />
+            <div
+              *ngIf="validForm && userForm.controls.tel.hasError('required')"
+              class="invalid-feedback"
+            >
+              Quantité de produit obligatoire !
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="email">email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+              [ngClass]="{
+                'is-valid': validForm && !userForm.controls.email.errors,
+                'is-invalid': validForm && userForm.controls.email.errors
+              }"
+              placeHolder="email"
+              name="email"
+              ngModel
+            />
+            <div class="invalid-feedback">email obligatoire !</div>
+          </div>
+  
+          <div class="form-group row">
+            <div class="col-6">
+              <label for="pwd">Mot de passe</label>
+              <input
+                type="password"
+                class="form-control"
+                id="pwd"
+                formControlName="pwd"
+                [ngClass]="{
+                  'is-valid': validForm && !userForm.controls.pwd.errors,
+                  'is-invalid': validForm && userForm.controls.pwd.errors
+                }"
+                placeHolder="pwd"
+                name="pwd"
+                ngModel
+              />
+              <div class="invalid-feedback">mot de passe obligatoire !</div>
+            </div>
+  
+            <div class="col-6">
+              <label for="pwd2">Confirmer mot de passe</label>
+              <input
+                type="password"
+                class="form-control"
+                id="pwd2"
+                formControlName="pwd2"
+                [ngClass]="{
+                  'is-valid': validForm && !userForm.controls.pwd.errors,
+                  'is-invalid': validForm && userForm.controls.pwd.errors
+                }"
+                placeHolder="pwd2"
+                name="pwd2"
+                ngModel
+              />
+              <div class="invalid-feedback">mot de passe obligatoire !</div>
+              <div *ngIf="userForm.value.pwd!==userForm.value.pwd" class="invalid-feedback">mot de passe non conformes !</div>
+            </div>
+          </div>
+  
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+            <button class="btn btn-primary" type="submit" routerLink="/users">
+              Liste d'utilisateurs
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2>Mes utilisateurs</h2>
+        <button class="btn btn-primary" routerLink="register">Ajouter utilisateur</button>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nom</th>
+              <th>Préom</th>
+              <th>Date de naissance</th>
+              <th>Tel</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users;">
+              <td>{{ user.id }}</td>
+              <td>{{ user.nom }}</td>
+              <td>{{ user.prenom }}</td>
+              <td>{{ user.dateNaissance }}</td>
+              <td>{{ user.tel }}</td>
+              <td>{{ user.email }}</td>
+              <td>
+                  <button class="btn btn-primary me-2" routerLink="/users/edit/{{user.id}}">Editer</button>
+                  <button class="btn btn-danger" (click)="suppUser(user.id)">Supprimer</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
