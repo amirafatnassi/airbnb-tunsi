@@ -22,7 +22,7 @@ exports.getSafetyItem = async (req, res) => {
   }
 };
 
-  exports.addSafetyItem = async (req, res) => {
+exports.addSafetyItem = async (req, res) => {
   try {
     const safetyItem = await safetyItems.create(req.body);
     res.status(200).send(safetyItem);
@@ -43,7 +43,9 @@ exports.updateSafetyItem = async (req, res) => {
 
 exports.deleteSafetyItem = async (req, res) => {
   try {
-    const deletedSafetyItem = await SafetyItems.findByIdAndDelete(req.params.id);
+    const deletedSafetyItem = await SafetyItems.findByIdAndDelete(
+      req.params.id
+    );
     res.status(200).send(deletedSafetyItem);
   } catch (error) {
     res.status(500).send("erreur serveur");

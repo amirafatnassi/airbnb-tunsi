@@ -22,7 +22,7 @@ exports.getOption = async (req, res) => {
   }
 };
 
-  exports.addOption = async (req, res) => {
+exports.addOption = async (req, res) => {
   try {
     const option = await options.create(req.body);
     res.status(200).send(option);

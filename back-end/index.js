@@ -19,6 +19,7 @@ app.use('/types_contrats', require('./Routes/typeContrat'));
 app.use('/installations', require('./Routes/installation'));
 app.use('/safety_items', require('./Routes/safetyItem'));
 app.use('/options', require('./Routes/option'));
+app.use('/criteres', require('./Routes/critere'));
 
 app.listen(port, function () { 
   console.log("app working on port:", port);
