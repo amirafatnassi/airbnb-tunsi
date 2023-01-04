@@ -23,6 +23,7 @@ exports.getRole = async (req, res) => {
 };
 
 exports.addRole = async (req, res) => {
+  exports.addRole = async (req, res) => {
   try {
     const role = await roles.create(req.body);
     res.status(200).send(role);
