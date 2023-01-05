@@ -10,8 +10,8 @@ const UserSchema = new Schema(
     address: String,
     role: {
       type: String,
-      enum: ["admin", "staff", "airbnbOwner", "user"],
-      default: "user"
+      enum: ["Admin", "Hote", "Utilisateur"],
+      default: "Utilisateur"
   },  },
   { timestamps: true, versionKey: false }
 );

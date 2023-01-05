@@ -112,3 +112,14 @@ exports.resetPassword = async (req, res) => {
     res.status(500).send({ message: error.message || "An error occured" });
   }
 };
+
+
+
+exports.getUsers = async (req, res) => {
+  try {
+    const result = await users.find();
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(500).json("erreur serveur");
+  }
+};

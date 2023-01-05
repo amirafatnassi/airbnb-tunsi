@@ -9,23 +9,23 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   createUser(data:any){
-    return this.http.post('http://localhost:4200/users',data);
+    return this.http.post('http://localhost:4000/users/register',data);
   }
 
   
   getUsers() {
-    return this.http.get('http://localhost:4200/users');
+    return this.http.get('http://localhost:4000/users');
   }
 
   deleteUser(id: number) {
-    return this.http.delete(`http://localhost:4200/users/${id}`);
+    return this.http.delete(`http://localhost:4000/users/${id}`);
   }
 
   getUser(id: number) {
-    return this.http.get('http://localhost:4200/users/' + id);
+    return this.http.get('http://localhost:4000/users/' + id);
   }
 
   updateUser(id: number, data: any) {
-    return this.http.put('http://localhost:4200/users/' + id, data);
+    return this.http.put('http://localhost:4000/users/' + id, data);
   }
 }

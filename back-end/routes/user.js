@@ -1,7 +1,6 @@
 const express=require("express");
 const passport=require('passport');
-const { login, forgetPassword, resetPassword } = require("../Controllers/userController");
-const { register } = require("../Controllers/userController");
+const { login, forgetPassword, resetPassword, register, getUsers} = require("../Controllers/userController");
 const router=express.Router();
 
 router.post('/register',register);
@@ -12,6 +11,7 @@ router.get('/profile',
   function(req, res) {
     res.json(req.user);
   });
+router.get('/',getUsers);
 
 router.post('/forget-password',forgetPassword);
 router.put('/reset-password',resetPassword);

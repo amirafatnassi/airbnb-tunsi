@@ -9,19 +9,19 @@
               <th>Id</th>
               <th>Nom</th>
               <th>Préom</th>
-              <th>Date de naissance</th>
-              <th>Tel</th>
+              <th>Adresse</th>
+              <th>Role</th>
               <th>Email</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let user of users;">
-              <td>{{ user.id }}</td>
-              <td>{{ user.nom }}</td>
-              <td>{{ user.prenom }}</td>
-              <td>{{ user.dateNaissance }}</td>
-              <td>{{ user.tel }}</td>
+              <td>{{ user._id }}</td>
+              <td>{{ user.lastName }}</td>
+              <td>{{ user.firstName }}</td>
+              <td>{{ user.address }}</td>
+              <td>{{ user.role }}</td>
               <td>{{ user.email }}</td>
               <td>
                   <button class="btn btn-primary me-2" routerLink="/users/edit/{{user.id}}">Editer</button>
