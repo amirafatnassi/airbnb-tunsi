@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+    <form
+      [formGroup]="safetyItemForm"
+      (ngSubmit)="update()"
+      *ngIf="safetyItemForm"
+    >
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <label for="lib">Libellé:</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-valid': validForm && !safetyItemForm.controls.lib.errors,
+                'is-invalid': validForm && safetyItemForm.controls.lib.errors
+              }"
+              class="form-control"
+              id="lib"
+              formControlName="lib"
+              placeholder="lib"
+              name="lib"
+              ngModel
+            />
+            <div class="invalid-feedback">Libellé obligatoire !</div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">
+              Enregistrer modification
+            </button>
+            <button
+              class="btn btn-primary"
+              type="submit"
+              routerLink="/safety_items"
+            >
+              Liste de safety items
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  

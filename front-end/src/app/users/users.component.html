@@ -1,36 +1,42 @@
-<div class="container">
-    <div class="row">
-      <div class="col-xs-12">
-        <h2>Mes utilisateurs</h2>
-        <button class="btn btn-primary" routerLink="register">Ajouter utilisateur</button>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Nom</th>
-              <th>Préom</th>
-              <th>Adresse</th>
-              <th>Role</th>
-              <th>Email</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of users;">
-              <td>{{ user._id }}</td>
-              <td>{{ user.lastName }}</td>
-              <td>{{ user.firstName }}</td>
-              <td>{{ user.address }}</td>
-              <td>{{ user.role }}</td>
-              <td>{{ user.email }}</td>
-              <td>
-                  <button class="btn btn-primary me-2" routerLink="/users/edit/{{user.id}}">Editer</button>
-                  <button class="btn btn-danger" (click)="suppUser(user.id)">Supprimer</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+<div class="card">
+  <div class="card-body">
+    <!-- title -->
+    <h4 class="card-title">Liste des utilisateurs</h4>
+
+    <!-- title -->
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th class="text-dark font-medium fs-4">Nom</th>
+            <th class="text-dark font-medium fs-4">Prénom</th>
+            <th class="text-dark font-medium fs-4">Adresse</th>
+            <th class="text-dark font-medium fs-4">Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>
+              <div class="d-flex align-items-center">
+                <img [src]="" alt="user" width="45" class="rounded-circle">
+                <div class="ms-3">
+                  <h5 class="mb-0 font-medium">
+                    {{ user.firstName }} {{ user.lastName }}
+                  </h5>
+                  <span>{{ user.email }}</span>
+                </div>
+              </div>
+            </td>
+            <td class="fs-4">{{ user._id }}</td>
+            <td>
+              <h5 class="mb-0 fw-normal">{{ user.address }}</h5>
+            </td>
+            <td>
+              <span class="mb-1 me-2 badge bg-secondary">{{ user.role }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  
+</div>

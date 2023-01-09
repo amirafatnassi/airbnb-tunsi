@@ -5,7 +5,7 @@ exports.gettypesContrats = async (req, res) => {
     const result = await typesContrats.find();
     res.status(200).send(result);
   } catch (error) {
-    res.status(500).json("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };
 
@@ -18,7 +18,7 @@ exports.getTypeContrat = async (req, res) => {
       res.status(401).send("TypeContrat not found !");
     }
   } catch (error) {
-    res.status(500).json("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };
 
@@ -27,7 +27,7 @@ exports.getTypeContrat = async (req, res) => {
     const typeContrat = await typesContrats.create(req.body);
     res.status(200).send(typeContrat);
   } catch (error) {
-    res.status(500).send("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };
 
@@ -37,7 +37,7 @@ exports.updateTypeContrat = async (req, res) => {
     const updatedTypeContrat = await typesContrats.findById(req.params.id);
     res.status(200).send(updatedTypeContrat);
   } catch (error) {
-    res.status(500).send("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };
 
@@ -46,6 +46,6 @@ exports.deleteTypeContrat = async (req, res) => {
     const deletedTypeContrat = await typesContrats.findByIdAndDelete(req.params.id);
     res.status(200).send(deletedTypeContrat);
   } catch (error) {
-    res.status(500).send("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };

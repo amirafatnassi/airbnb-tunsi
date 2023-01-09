@@ -31,8 +31,8 @@
               <input
                 type="password"
                 [ngClass]="{
-                  'is-valid': validForm && !loginForm.controls.pwd.errors,
-                  'is-invalid': validForm && loginForm.controls.pwd.errors
+                  'is-valid': validForm && !loginForm.controls.password.errors,
+                  'is-invalid': validForm && loginForm.controls.password.errors
                 }"
                 class="form-control"
                 id="password"
@@ -52,6 +52,7 @@
             >
               Login
             </button>
+            <a  routerLink="/users/forget-password">Mot de passe oublié</a>
           </div>
         </form>
       </div>

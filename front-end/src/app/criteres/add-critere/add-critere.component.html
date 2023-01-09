@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-center">
+    <form
+      [formGroup]="critereForm"
+      (ngSubmit)="onSubmitFormGroupe()"
+      *ngIf="critereForm"
+    >
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <label for="lib">Nom de Produit</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-valid': validForm && !critereForm.controls.lib.errors,
+                'is-invalid': validForm && critereForm.controls.lib.errors
+              }"
+              class="form-control"
+              id="lib"
+              formControlName="lib"
+              placeholder="lib"
+              name="lib"
+              ngModel
+            />
+            <div class="invalid-feedback">Libellé obligatoire !</div>
+          </div>
+        </div>
+  
+        <div class="card-footer">
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+            <button class="btn btn-primary" type="submit" routerLink="/criteres">
+              Liste des critères
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  

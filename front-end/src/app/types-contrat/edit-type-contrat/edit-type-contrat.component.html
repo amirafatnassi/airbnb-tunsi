@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+    <form
+      [formGroup]="typeContratForm"
+      (ngSubmit)="update()"
+      *ngIf="typeContratForm"
+    >
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <label for="lib">Libellé:</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-valid': validForm && !typeContratForm.controls.lib.errors,
+                'is-invalid': validForm && typeContratForm.controls.lib.errors
+              }"
+              class="form-control"
+              id="lib"
+              formControlName="lib"
+              placeholder="lib"
+              name="lib"
+              ngModel
+            />
+            <div class="invalid-feedback">Libellé obligatoire !</div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">
+              Enregistrer modification
+            </button>
+            <button
+              class="btn btn-primary"
+              type="submit"
+              routerLink="/types_contrats"
+            >
+              Liste d'critères
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  

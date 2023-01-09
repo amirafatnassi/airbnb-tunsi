@@ -5,7 +5,7 @@ exports.getOptions = async (req, res) => {
     const result = await options.find();
     res.status(200).send(result);
   } catch (error) {
-    res.status(500).json("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };
 
@@ -18,7 +18,7 @@ exports.getOption = async (req, res) => {
       res.status(401).send("option not found !");
     }
   } catch (error) {
-    res.status(500).json("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };
 
@@ -27,7 +27,7 @@ exports.addOption = async (req, res) => {
     const option = await options.create(req.body);
     res.status(200).send(option);
   } catch (error) {
-    res.status(500).send("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };
 
@@ -37,7 +37,7 @@ exports.updateOption = async (req, res) => {
     const updatedOption = await options.findById(req.params.id);
     res.status(200).send(updatedOption);
   } catch (error) {
-    res.status(500).send("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };
 
@@ -46,6 +46,6 @@ exports.deleteOption = async (req, res) => {
     const deletedOption = await options.findByIdAndDelete(req.params.id);
     res.status(200).send(deletedOption);
   } catch (error) {
-    res.status(500).send("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };

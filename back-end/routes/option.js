@@ -2,10 +2,10 @@ const express = require("express");
 const { getOptions, getOption, addOption, updateOption, deleteOption } = require("../controllers/optionController");
 const router = express.Router();
 
-router.get("/getOptions", getOptions);
-router.get("/getOption", getOption);
-router.post("/addOption", addOption);
-router.put("/updateOption/:id", updateOption);
-router.delete("/deleteOption/:id", deleteOption);
+router.get("/", getOptions);
+router.get("/show/:id", getOption);
+router.post("/add", addOption);
+router.put("/update/:id", updateOption);
+router.delete("/delete/:id", deleteOption);
 
 module.exports = router;

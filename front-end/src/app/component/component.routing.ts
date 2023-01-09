@@ -9,7 +9,6 @@ import { ButtonsComponent } from './buttons/buttons.component';
 import { CardsComponent } from './card/card.component';
 import { TableComponent } from './table/table.component';
 
-
 export const ComponentsRoutes: Routes = [
 	{
 		path: '',

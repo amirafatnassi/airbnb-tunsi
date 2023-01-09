@@ -5,7 +5,7 @@ exports.getInstallations = async (req, res) => {
     const result = await installations.find();
     res.status(200).send(result);
   } catch (error) {
-    res.status(500).json("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };
 
@@ -18,7 +18,7 @@ exports.getInstallation = async (req, res) => {
       res.status(401).send("installation not found !");
     }
   } catch (error) {
-    res.status(500).json("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };
 
@@ -27,7 +27,7 @@ exports.getInstallation = async (req, res) => {
     const installation = await installations.create(req.body);
     res.status(200).send(installation);
   } catch (error) {
-    res.status(500).send("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };
 
@@ -37,7 +37,7 @@ exports.updateInstallation = async (req, res) => {
     const updatedInstallation = await installations.findById(req.params.id);
     res.status(200).send(updatedInstallation);
   } catch (error) {
-    res.status(500).send("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };
 
@@ -46,6 +46,6 @@ exports.deleteInstallation = async (req, res) => {
     const deletedInstallation = await installations.findByIdAndDelete(req.params.id);
     res.status(200).send(deletedInstallation);
   } catch (error) {
-    res.status(500).send("erreur serveur");
+    res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };

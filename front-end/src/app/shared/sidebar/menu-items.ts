@@ -82,4 +82,53 @@ export const ROUTES: RouteInfo[] = [
     extralink: false,
     submenu: []
   }
+  ,
+  {
+    path: 'installations',
+    title: 'Liste des installations',
+    icon: 'bi bi-people',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: 'options',
+    title: 'Liste des options',
+    icon: 'bi bi-people',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: 'criteres',
+    title: 'Liste des critères',
+    icon: 'bi bi-people',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: 'safety_items',
+    title: 'Liste de safety items',
+    icon: 'bi bi-people',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: 'types_logements',
+    title: 'Liste de types de logements',
+    icon: 'bi bi-people',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: 'types_contrats',
+    title: 'Liste de types de contrats',
+    icon: 'bi bi-people',
+    class: '',
+    extralink: false,
+    submenu: []
+  }
 ];

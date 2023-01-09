@@ -28,4 +28,16 @@ export class UserService {
   updateUser(id: number, data: any) {
     return this.http.put('http://localhost:4000/users/' + id, data);
   }
+
+  login(data:any){
+    return this.http.post('http://localhost:4000/users/login', data);
+  }
+
+  forgetPassword(data:any){
+    return this.http.post('http://localhost:4000/users/forget-password', data);
+  }
+  
+  resetPassword(data:any){
+    return this.http.put('http://localhost:4000/users/reset-password', data);
+  }
 }

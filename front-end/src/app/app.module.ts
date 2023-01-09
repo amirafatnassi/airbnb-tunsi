@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import {
   CommonModule, LocationStrategy,
   PathLocationStrategy
@@ -50,6 +51,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgbModule,
     AppRoutingModule,
     PerfectScrollbarModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     {

@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
   try {
     const result = await users.findOne({ email: req.body.email });
     if (!result) {
-      res.status(400).send({ message: "email n'existe pas !" });
+      res.status(400).send({ message: "Email n'existe pas !" });
     } else {
       const checkPassword = bcrypt.compareSync(
         req.body.password,
@@ -36,7 +36,7 @@ exports.login = async (req, res) => {
       if (checkPassword) {
         const data = { userId: result._id, userEmail: result.email };
         const token = jwt.sign(data, process.env.JWTKEY, { expiresIn: "1h" });
-        res.send({ token });
+        res.send({ token, message: "logged in successfully" });
       } else {
         res.status(400).send({ message: "password don't match" });
       }
@@ -51,7 +51,7 @@ exports.forgetPassword = async (req, res) => {
     const user = await users.findOne({ email: req.body.email });
 
     if (!user) {
-      res.status(400).send({ message: "user does not exist !" });
+      res.status(400).send({ message: "L'utlisateur n'existe pas !" });
     }
     let token = await tokens.findOne({ userId: user._id });
     if (token) {
@@ -62,7 +62,7 @@ exports.forgetPassword = async (req, res) => {
       userId: user._id,
       token: resetToken,
     });
-    const link = `${process.env.CLIENT_URL}users/passwordReset?token=${resetToken}&id=${user._id}`;
+    const link = `${process.env.CLIENT_URL}users/reset-password/${resetToken}`;
 
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -86,7 +86,7 @@ exports.forgetPassword = async (req, res) => {
        <p style="color:red">This link is valid for 15minutes and one time usage.<p>
       <small>Ignore if you didn't request this.</small>`,
     });
-    res.status(200).send({ message: "link sent successfully" });
+    res.status(200).send({ message: "un mail a été envoyé !" });
   } catch (error) {
     res.status(500).send({ message: error.message || "erreur serveur" });
   }
@@ -94,26 +94,21 @@ exports.forgetPassword = async (req, res) => {
 
 exports.resetPassword = async (req, res) => {
   try {
-    const user = await users.findOne({ email: req.body.email });
-
-    if (!user) throw new Error("User does not exist");
-    else {
-      const token = await tokens.findOne({ userId: user._id });
+      const token = await tokens.findOne({token:req.body.token});
+      console.log(token);
       if (token) {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.password, salt);
-        await users.findByIdAndUpdate(token.userId, { password: hash });
+        await users.findByIdAndUpdate(token.userId, { password: hash },{new:true});
         res.status(200).send({ message: "password updated" });
       } else {
         res.status(400).send({ message: "token invalid" });
       }
-    }
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: error.message || "An error occured" });
   }
 };
-
-
 
 exports.getUsers = async (req, res) => {
   try {
