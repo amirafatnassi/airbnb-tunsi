@@ -5,20 +5,20 @@
 
     <!-- title -->
     <div class="table-responsive">
-      <table class="table align-middle">
+      <table class="table align-middle"  *ngIf="users.length > 0" datatable [dtOptions]="dtOptions">
         <thead>
           <tr>
-            <th class="text-dark font-medium fs-4">Nom</th>
-            <th class="text-dark font-medium fs-4">Prénom</th>
+            <th class="text-dark font-medium fs-4">Nom et prénom</th>
             <th class="text-dark font-medium fs-4">Adresse</th>
             <th class="text-dark font-medium fs-4">Role</th>
+            <th class="text-dark font-medium fs-4">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let user of users">
             <td>
               <div class="d-flex align-items-center">
-                <img [src]="" alt="user" width="45" class="rounded-circle">
+                <span *ngIf="user.photo"><img [src]="user.photo" alt="user" width="45" class="rounded-circle"></span>
                 <div class="ms-3">
                   <h5 class="mb-0 font-medium">
                     {{ user.firstName }} {{ user.lastName }}
@@ -27,12 +27,33 @@
                 </div>
               </div>
             </td>
-            <td class="fs-4">{{ user._id }}</td>
             <td>
               <h5 class="mb-0 fw-normal">{{ user.address }}</h5>
             </td>
             <td>
-              <span class="mb-1 me-2 badge bg-secondary">{{ user.role }}</span>
+              <span
+                class="mb-1 me-2 badge text-uppercase fw-bold"
+                [ngClass]="{
+                  'bg-success': user.role == 'Admin',
+                  'bg-info': user.role == 'Utilisateur',
+                  'bg-primary': user.role == 'Hote'
+                }"
+                >{{ user.role }}</span
+              >
+            </td>
+            <td>
+              <button
+                class="btn rounded-circle btn-success me-2"
+                routerLink="/users/update/{{ user._id }}"
+              >
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button
+                class="btn rounded-circle btn-danger"
+                (click)="suppUser(user._id)"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
             </td>
           </tr>
         </tbody>

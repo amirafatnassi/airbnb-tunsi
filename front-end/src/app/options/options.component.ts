@@ -7,18 +7,20 @@ import { OptionService } from '../services/option/option.service';
   styleUrls: ['./options.component.scss']
 })
 export class OptionsComponent {
-  constructor(private optionService: OptionService) {}
   options :any[]=[];
+  dtOptions: DataTables.Settings = {};
+  
+  constructor(private optionService: OptionService) {}
 
   ngOnInit(): void {
-    this.optionsList();console.log('inint');console.log(this.options);
-    
-    
+    this.optionsList();console.log('inint');
+    this.dtOptions = {
+      pagingType: 'full_numbers'
+    };    
   }
 
   optionsList(){
     this.optionService.getOptions().subscribe((res:any)=>{ console.log('rrrr');this.options=res ;
-     console.log(this.options);
     })
   }
 

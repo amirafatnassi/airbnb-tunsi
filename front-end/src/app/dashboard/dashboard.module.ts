@@ -9,6 +9,7 @@ import { FeedsComponent } from "./dashboard-components/feeds/feeds.component";
 import { TopSellingComponent } from "./dashboard-components/top-selling/top-selling.component";
 import { TopCardsComponent } from "./dashboard-components/top-cards/top-cards.component";
 import { BlogCardsComponent } from "./dashboard-components/blog-cards/blog-cards.component";
+import { ListUsersComponent } from "../list-users/list-users.component";
 
 const routes: Routes = [
   {
@@ -22,13 +23,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    RouterModule.forChild(routes),
-    NgApexchartsModule,
-  ],
   declarations: [
     DashboardComponent,
     SalesSummaryComponent,
@@ -36,6 +30,14 @@ const routes: Routes = [
     TopSellingComponent,
     TopCardsComponent,
     BlogCardsComponent,
+    ListUsersComponent,
+  ],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    RouterModule.forChild(routes),
+    NgApexchartsModule,
   ],
 })
 export class DashboardModule {}

@@ -6,6 +6,7 @@ import { TypesLogementComponent } from './types-logement.component';
 import { AddTypeLogementComponent } from './add-type-logement/add-type-logement.component';
 import { EditTypeLogementComponent } from './edit-type-logement/edit-type-logement.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DataTablesModule } from "angular-datatables";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     TypesLogementRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DataTablesModule
   ]
 })
 export class TypesLogementModule { }

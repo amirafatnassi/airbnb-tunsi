@@ -11,8 +11,10 @@ const UserSchema = new Schema(
     role: {
       type: String,
       enum: ["Admin", "Hote", "Utilisateur"],
-      default: "Utilisateur"
-  },  },
+      default: "Utilisateur",
+    },
+    photo: { type: String, default: "https://imgur.com/7FUjYTa.png" },
+  },
   { timestamps: true, versionKey: false }
 );
 

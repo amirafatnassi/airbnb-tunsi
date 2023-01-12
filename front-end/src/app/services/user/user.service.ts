@@ -25,6 +25,11 @@ export class UserService {
     return this.http.get('http://localhost:4000/users/' + id);
   }
 
+  
+  myProfile() {
+    return this.http.get('http://localhost:4000/users/profile/');
+  }
+
   updateUser(id: number, data: any) {
     return this.http.put('http://localhost:4000/users/' + id, data);
   }

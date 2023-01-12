@@ -6,6 +6,7 @@ import { TypesContratComponent } from './types-contrat.component';
 import { AddTypeContratComponent } from './add-type-contrat/add-type-contrat.component';
 import { EditTypeContratComponent } from './edit-type-contrat/edit-type-contrat.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DataTablesModule } from "angular-datatables";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     TypesContratRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DataTablesModule
   ]
 })
 export class TypesContratModule { }

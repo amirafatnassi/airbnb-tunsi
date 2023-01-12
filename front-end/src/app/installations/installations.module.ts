@@ -1,24 +1,25 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
-import { InstallationsRoutingModule } from './installations-routing.module';
-import { InstallationsComponent } from './installations.component';
-import { AddInstallationComponent } from './add-installation/add-installation.component';
-import { EditInstallationComponent } from './edit-installation/edit-installation.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { InstallationsRoutingModule } from "./installations-routing.module";
+import { InstallationsComponent } from "./installations.component";
+import { AddInstallationComponent } from "./add-installation/add-installation.component";
+import { EditInstallationComponent } from "./edit-installation/edit-installation.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { DataTablesModule } from "angular-datatables";
 
 @NgModule({
   declarations: [
     InstallationsComponent,
     AddInstallationComponent,
-    EditInstallationComponent
+    EditInstallationComponent,
   ],
   imports: [
     CommonModule,
     InstallationsRoutingModule,
     FormsModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    DataTablesModule
+  ],
 })
-export class InstallationsModule { }
+export class InstallationsModule {}

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CritereService } from '../services/critere/critere.service';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-criteres',
@@ -7,10 +8,15 @@ import { CritereService } from '../services/critere/critere.service';
   styleUrls: ['./criteres.component.scss']
 })
 export class CriteresComponent {
-  constructor(private critereService: CritereService) {}
   criteres :any[]=[];
+  dtOptions: DataTables.Settings = {};
+  
+  constructor(private critereService: CritereService) {}
 
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers'
+    };
     this.criteresList();
   }
 
@@ -18,11 +24,24 @@ export class CriteresComponent {
     this.critereService.getCriteres().subscribe((res:any)=>{ this.criteres=res})
   }
 
-  suppInstallation(id:number){
-    this.critereService.deleteCritere(id).subscribe((res:any)=>{
-      console.log('critère supprimé !');
-      this.ngOnInit();
+  suppCritere(id:number){
+    Swal.fire({
+      title: "Êtes-vous sûre?",
+      showCancelButton: true,
+      confirmButtonColor: "btn btn-primary",
+      cancelButtonColor: "btn btn-secondary",
+      confirmButtonText: "Oui, supprimer!",
+      cancelButtonText: "Annuler",
+    }).then((result) => {
+      if (result.isConfirmed) {      
+        this.critereService.deleteCritere(id).subscribe((res:any)=>{
+          console.log('critère supprimé !');
+          this.ngOnInit();
+        });
+      }
     });
+    
   }
+  
 }
 

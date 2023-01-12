@@ -6,6 +6,7 @@ import { SafetyItemsComponent } from './safety-items.component';
 import { AddSafetyItemComponent } from './add-safety-item/add-safety-item.component';
 import { EditSafetyItemComponent } from './edit-safety-item/edit-safety-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DataTablesModule } from "angular-datatables";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     SafetyItemsRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DataTablesModule
   ]
 })
 export class SafetyItemsModule { }

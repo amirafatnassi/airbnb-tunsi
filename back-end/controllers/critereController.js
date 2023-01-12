@@ -42,7 +42,7 @@ exports.updateCritere = async (req, res) => {
 
 exports.deleteCritere = async (req, res) => {
   try {
-    const deletedCritere = await Criteres.findByIdAndDelete(req.params.id);
+    const deletedCritere = await criteres.findByIdAndDelete(req.params.id);
     res.status(200).send(deletedCritere);
   } catch (error) {
     res.status(500).send({ message: error.message || "erreur serveur" });

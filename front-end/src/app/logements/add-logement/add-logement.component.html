@@ -1,0 +1,170 @@
+<div class="row">
+  <div class="col-md-12 col-md-offset-3">
+    <form [formGroup]="logementDetails" id="msform">
+      <!-- progressbar -->
+      <ul id="progressbar">
+        <li [ngClass]="step >= 1 ? 'active ' : 'inactive'">Logement</li>
+        <li [ngClass]="step >= 2 ? 'active' : 'inactive'">Adresse</li>
+        <li [ngClass]="step == 3 ? 'active' : 'inactive'">Détails</li>
+      </ul>
+
+      <!-- fieldsets -->
+      <fieldset *ngIf="step == 1">
+        <h2 class="fs-title">Ajouter logement</h2>
+        <input
+          type="text"
+          formControlName="titre"
+          [ngClass]="{ 'is-invalid': logement_step && logement.titre.errors }"
+          placeholder="titre"
+        />
+        <div *ngIf="logement_step && logementDetails.controls.titre.errors">
+          <div *ngIf="logement.titre.errors?.required">Titre required</div>
+        </div>
+        <textarea
+          type="text"
+          formControlName="description"
+          name="description"
+          placeholder="description"
+          rows="5"
+        ></textarea>
+        <div
+          *ngIf="logement_step && logementDetails.controls.description.errors"
+        >
+          <div *ngIf="logement.description.errors?.required">
+            Description est obligatoire
+          </div>
+        </div>
+        <input
+          (click)="next()"
+          type="button"
+          name="next"
+          class="next action-button"
+          value="Suivant"
+        />
+      </fieldset>
+    </form>
+
+    <form [formGroup]="addressDetails" id="msform">
+      <fieldset *ngIf="step == 2">
+        <h2 class="fs-title">Détail addresse</h2>
+        <div class="row">
+          <div class="col-6">
+            <input type="text" formControlName="ville" placeholder="ville" />
+            <div *ngIf="address_step && addressDetails.controls.ville.errors">
+              <div *ngIf="address.ville.errors?.required">
+                Ville obligatoire
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <input type="text" formControlName="pays" placeholder="pays" />
+            <div *ngIf="address_step && addressDetails.controls.pays.errors">
+              <div *ngIf="address.pays.errors?.required">Pays obligatoire</div>
+            </div>
+          </div>
+        </div>
+        <input formControlName="rue" placeholder="rue" />
+        <div *ngIf="address_step && addressDetails.controls.rue.errors">
+          <div *ngIf="address.rue.errors?.required">Rue est obligatoire</div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <input type="text" formControlName="cp" placeholder="cp" />
+            <div *ngIf="address_step && addressDetails.controls.cp.errors">
+              <div *ngIf="address.cp.errors?.required">
+                code postal obligatoire
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <input type="text" formControlName="num" placeholder="num" />
+            <div *ngIf="address_step && addressDetails.controls.num.errors">
+              <div *ngIf="address.num.errors?.required">
+                Num de propriété obligatoire
+              </div>
+            </div>
+          </div>
+        </div>
+        <input
+          (click)="previous()"
+          type="button"
+          name="previous"
+          class="previous action-button-previous"
+          value="Précèdant"
+        />
+        <input
+          (click)="next()"
+          type="button"
+          name="next"
+          class="next action-button"
+          value="Suivant"
+        />
+      </fieldset>
+    </form>
+
+    <form [formGroup]="details" id="msform">
+      <fieldset *ngIf="step == 3">
+        <h2 class="fs-title">Détails</h2>
+        <label for="nb_invites">Nombre d'invités (max):</label>
+        <input
+          type="number"
+          formControlName="nb_invites"
+          placeholder="Highest Qualification"
+        />
+        <div *ngIf="details_step && details.controls.nb_invites.errors">
+          <div *ngIf="detail.nb_invites.errors?.required">
+            Nombre d'invités est obligatoire
+          </div>
+        </div>
+        <label for="nb_chambres">Nombre de chambres:</label>
+        <input
+          type="number"
+          formControlName="nb_chambres"
+          placeholder="nb_chambres"
+        />
+        <div *ngIf="details_step && details.controls.nb_chambres.errors">
+          <div *ngIf="detail.nb_chambres.errors?.required">
+            nombre de chambres est obligatoire
+          </div>
+        </div>
+        <label for="nb_lits">Nombre de lits:</label>
+        <input
+          type="number"
+          formControlName="nb_lits"
+          placeholder="Total Marks"
+        />
+        <div *ngIf="details_step && details.controls.nb_lits.errors">
+          <div *ngIf="detail.nb_lits.errors?.required">
+            Nombre de lits obligatoire!
+          </div>
+        </div>
+        <label for="nb_salledeBain">Nombre de salles de bain:</label>
+        <input
+          type="number"
+          formControlName="nb_salledeBain"
+          placeholder="Total Marks"
+        />
+        <div *ngIf="details_step && details.controls.nb_salledeBain.errors">
+          <div *ngIf="detail.nb_salledeBain.errors?.required">
+            Nombre de salles de bain obligatoire !
+          </div>
+        </div>
+
+        <input
+          (click)="previous()"
+          type="button"
+          name="previous"
+          class="previous action-button-previous"
+          value="Previous"
+        />
+        <input
+          (click)="submit()"
+          type="submit"
+          name="submit"
+          class="submit action-button"
+          value="Submit"
+        />
+      </fieldset>
+    </form>
+  </div>
+</div>

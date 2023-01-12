@@ -14,6 +14,7 @@ app.use(morgan("tiny"));
 app.use(bodyParser.json());
 
 app.use('/users', require('./Routes/user'));
+app.use('/logements', require('./Routes/logement'));
 app.use('/types_logements', require('./Routes/typeLogement'));
 app.use('/types_contrats', require('./Routes/typeContrat'));
 app.use('/installations', require('./Routes/installation'));

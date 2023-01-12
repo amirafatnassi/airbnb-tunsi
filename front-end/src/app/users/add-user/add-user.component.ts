@@ -15,7 +15,11 @@ export class AddUserComponent implements OnInit {
     address: new FormControl("", Validators.required),
     role: new FormControl(0, [Validators.required]),
     email: new FormControl("", [Validators.required, Validators.email]),
-    password: new FormControl("", [Validators.required]),
+    password: new FormControl("", [
+      Validators.required,
+      Validators.minLength(5),
+      Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$"),
+    ]),
   });
 
   constructor(private userService: UserService) {}

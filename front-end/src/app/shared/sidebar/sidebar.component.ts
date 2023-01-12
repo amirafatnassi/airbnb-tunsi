@@ -13,7 +13,6 @@ export class SidebarComponent implements OnInit {
   showMenu = '';
   showSubMenu = '';
   public sidebarnavItems:RouteInfo[]=[];
-  // this is for the open close
   addExpandClass(element: string) {
     if (element === this.showMenu) {
       this.showMenu = '0';
@@ -28,7 +27,6 @@ export class SidebarComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  // End open close
   ngOnInit() {
     this.sidebarnavItems = ROUTES.filter(sidebarnavItem => sidebarnavItem);
   }

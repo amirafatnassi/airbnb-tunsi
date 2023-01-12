@@ -5,13 +5,13 @@ const LogementSchema = new Schema(
   {
     titre: String,
     adresse: {
-      rue:String,
-      ville:String,
-      CP:Number,
-      pays:String,
-      Num:Number
+      rue: String,
+      ville: String,
+      cp: Number,
+      pays: String,
+      num: Number,
     },
-    nb_invite: Number,
+    nb_invites: Number,
     nb_chambres: Number,
     nb_lits: Number,
     nb_salledeBain: Number,
@@ -23,12 +23,12 @@ const LogementSchema = new Schema(
     safetyItems: [{ type: mongoose.Schema.Types.ObjectId, ref: "SafetyItem" }],
     typeContrat: { type: mongoose.Schema.Types.ObjectId, ref: "TypeContrat" },
     typeLogement: { type: mongoose.Schema.Types.ObjectId, ref: "TypeLogement" },
-    photos: [{ type: Buffer }],
+    photos: [{ type: String }],
     description: String,
-    prix_par_nuit: Number,
+    prix: Number,
     contact_info: String,
-    hote:{ type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    Note:Number,
+    hote: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    rating: Number,
   },
   { timestamps: true, versionKey: false }
 );

@@ -6,7 +6,7 @@ import { CriteresComponent } from './criteres.component';
 import { AddCritereComponent } from './add-critere/add-critere.component';
 import { EditCritereComponent } from './edit-critere/edit-critere.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { DataTablesModule } from "angular-datatables";
 
 @NgModule({
   declarations: [
@@ -18,7 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     CriteresRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DataTablesModule
   ]
 })
 export class CriteresModule { }

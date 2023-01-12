@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { OptionsComponent } from "./options.component";
 import { AddOptionComponent } from "./add-option/add-option.component";
 import { EditOptionComponent } from "./edit-option/edit-option.component";
+import { DataTablesModule } from "angular-datatables";
 
 @NgModule({
   declarations: [OptionsComponent, AddOptionComponent, EditOptionComponent],
@@ -14,6 +15,7 @@ import { EditOptionComponent } from "./edit-option/edit-option.component";
     OptionsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    DataTablesModule
   ],
 })
 export class OptionsModule {}
