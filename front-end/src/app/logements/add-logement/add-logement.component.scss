@@ -109,10 +109,10 @@
 
 #progressbar li {
     list-style-type: none;
-    color: white;
+    color: black;
     text-transform: uppercase;
     font-size: 9px;
-    width: 33.33%;
+    width: 14.285%;
     float: left;
     position: relative;
     letter-spacing: 1px;
@@ -208,4 +208,24 @@ fieldset {
            to {
                margin-left: 0%;width: 100%;
            }
+  }
+
+  label {
+    width: 100%;
+  }
+
+  .card-input-element {
+    display: none;
+  }
+
+  .card-input:hover {
+    cursor: pointer;
+    background-color: hsl(144, 60%, 95.9%);
+    -webkit-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+  }
+
+  .card-input-element:checked + .card-input {
+    border: 1px solid hsl(144, 100%, 35.9%);
   }

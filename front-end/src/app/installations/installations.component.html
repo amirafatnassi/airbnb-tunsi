@@ -15,17 +15,27 @@
         class="table table-bordered table-hover"
         *ngIf="installations.length > 0"
         datatable
-        style="width:100%"
+        style="width: 100%"
         [dtOptions]="dtOptions"
       >
         <thead>
           <tr>
-            <th class="col-10 col-sm-8">Lib</th>
+            <th class="col-1">#</th>
+            <th class="col-9 col-sm-8">Lib</th>
             <th class="col-2 col-sm-4">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let i of installations">
+            <td class="fs-4">
+              <span *ngIf="i.icon"
+                ><img
+                  [src]="i.icon"
+                  alt="user"
+                  width="45"
+                  class="rounded-circle"
+              /></span>
+            </td>
             <td>{{ i.lib }}</td>
             <td>
               <button

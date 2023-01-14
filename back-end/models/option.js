@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const OptionSchema = new Schema(
   {
-    lib:String
+    lib:String,
+    icon:String
   },
   { timestamps: true, versionKey: false }
 );

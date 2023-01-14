@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const CritereSchema = new Schema(
   {
-    lib:String
+    lib: String,
   },
   { timestamps: true, versionKey: false }
 );
