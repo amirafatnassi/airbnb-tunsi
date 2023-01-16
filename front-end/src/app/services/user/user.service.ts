@@ -22,9 +22,12 @@ export class UserService {
   }
 
   getUser(id: number) {
-    return this.http.get('http://localhost:4000/users/' + id);
+    return this.http.get('http://localhost:4000/users/' + id);  
   }
 
+  getUserByEmail(email: any) {
+    return this.http.get('http://localhost:4000/users/get-user-by-email/' + email);  
+  }
   
   myProfile() {
     return this.http.get('http://localhost:4000/users/profile/');

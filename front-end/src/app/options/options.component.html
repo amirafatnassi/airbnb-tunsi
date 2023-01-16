@@ -10,15 +10,24 @@
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <table class="table align-middle" *ngIf="options.length > 0" datatable [dtOptions]="dtOptions">
+      <table 
+      class="table table-bordered table-hover"
+      *ngIf="options.length > 0" datatable [dtOptions]="dtOptions">
         <thead>
           <tr>
+            <th class="text-dark font-medium fs-4">#</th>
             <th class="text-dark font-medium fs-4">Lib</th>
             <th class="text-dark font-medium fs-4">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let op of options">
+            <td class="fs-4"> <span *ngIf="op.icon"
+              ><img
+                [src]="op.icon"
+                width="45"
+                class="rounded"
+            /></span></td>
             <td class="fs-4">{{ op.lib }}</td>
             <td>
               <button

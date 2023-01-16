@@ -10,6 +10,7 @@ import { TopSellingComponent } from "./dashboard-components/top-selling/top-sell
 import { TopCardsComponent } from "./dashboard-components/top-cards/top-cards.component";
 import { BlogCardsComponent } from "./dashboard-components/blog-cards/blog-cards.component";
 import { ListUsersComponent } from "../list-users/list-users.component";
+import { DataTablesModule } from "angular-datatables";
 
 const routes: Routes = [
   {
@@ -38,6 +39,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     NgApexchartsModule,
+    DataTablesModule
+
   ],
 })
 export class DashboardModule {}

@@ -1,5 +1,10 @@
 import { Component } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { CritereService } from "../../services/critere/critere.service";
 import { OptionService } from "../../services/option/option.service";
 import { SafetyItemService } from "../../services/safetyItem/safety-item.service";
@@ -13,13 +18,7 @@ import { LogementService } from "../../services/logement/logement.service";
   styleUrls: ["./add-logement.component.scss"],
 })
 export class AddLogementComponent {
-  logementDetails!: FormGroup;
-  addressDetails!: FormGroup;
-  details!: FormGroup;
-  installationDetails!: FormGroup;
-  criteresDetails!: FormGroup;
-  optionsDetails!: FormGroup;
-  safetyItemsDetails!: FormGroup;
+  logementFG!: FormGroup;
 
   logement_step = false;
   address_step = false;
@@ -29,134 +28,124 @@ export class AddLogementComponent {
   option_step = false;
   safetyItem_step = false;
 
+  liste_installations: any[] = [];
+  selectedInstallations: any[] = [];
+
+  liste_criteres: any[] = [];
+  selectedCriteres: any[] = [];
+
+  liste_options: any[] = [];
+  selectedOptions: any[] = [];
+  
+  liste_safetyItems: any[] = [];
+  selectedSafetyItems: any[] = [];
+
   step = 1;
 
   constructor(
-    private formBuilder: FormBuilder,
     private installationService: InstallationService,
     private critereService: CritereService,
     private optionService: OptionService,
-    private safetyItemService: SafetyItemService
+    private safetyItem:SafetyItemService
   ) {}
-  liste_installations: any[] = [];
-  liste_criteres: any[] = [];
-  liste_options: any[] = [];
-  liste_safetyItems: any[] = [];
 
   ngOnInit() {
-    this.logementDetails = this.formBuilder.group({
-      titre: ["", Validators.required],
-      description: ["", Validators.required],
-    });
-    this.addressDetails = this.formBuilder.group({
-      rue: ["", Validators.required],
-      cp: ["", Validators.required],
-      num: ["", Validators.required],
-      ville: ["", Validators.required],
-      pays: ["", Validators.required],
-    });
-    this.details = this.formBuilder.group({
-      nb_invites: ["", Validators.required],
-      nb_chambres: ["", Validators.required],
-      nb_lits: ["", Validators.required],
-      nb_salledeBain: ["", Validators.required],
-    });
-    this.installationDetails = this.formBuilder.group({
-      installations: this.formBuilder.array([]),
-    });
-    this.criteresDetails = this.formBuilder.group({
-      criteres: this.formBuilder.array([]),
-    });
-    this.optionsDetails = this.formBuilder.group({
-      options: this.formBuilder.array([]),
-    });
-    this.safetyItemsDetails = this.formBuilder.group({
-      safetyItems: this.formBuilder.array([]),
+    this.logementFG = new FormGroup({
+      logementDetails: new FormGroup({
+        titre: new FormControl("", Validators.required),
+        description: new FormControl("", Validators.required),
+      }),
+      addressDetails: new FormGroup({
+        rue: new FormControl("", Validators.required),
+        cp: new FormControl("", Validators.required),
+        num: new FormControl("", Validators.required),
+        ville: new FormControl("", Validators.required),
+        pays: new FormControl("", Validators.required),
+      }),
+      details: new FormGroup({
+        nb_invites: new FormControl('', Validators.required),
+        nb_chambres: new FormControl('', Validators.required),
+        nb_lits: new FormControl('', Validators.required),
+        nb_salledeBain: new FormControl('', Validators.required),
+      }),
+      installationDetails: new FormGroup({
+        installations: new FormControl(this.selectedInstallations),
+      }),
+      critereDetails: new FormGroup({
+        criteres: new FormControl(this.selectedCriteres),
+      }),
+      optionDetails: new FormGroup({
+        options: new FormControl(this.selectedOptions),
+      }),
     });
 
     this.listeInstallations();
     this.listeCriteres();
     this.listeOptions();
-    this.listeSafetyItems();
   }
+
   get logement() {
-    return this.logementDetails.controls;
+    return this.logementFG.get("logementDetails") as FormGroup;
   }
   get detail() {
-    return this.details.controls;
+    return this.logementFG.get("details") as FormGroup;
   }
   get address() {
-    return this.addressDetails.controls;
+    return this.logementFG.get("addressDetails") as FormGroup;
   }
   get installations() {
-    return this.installationDetails.controls["installations"];
+    return this.logementFG.get("installationDetails") as FormGroup;
   }
+
   get criteres() {
-    return this.criteresDetails.controls["criteres"];
+    return this.logementFG.get("criteresDetails") as FormGroup;
   }
+
   get options() {
-    return this.optionsDetails.controls["options"];
-  }
-  get safetyItems() {
-    return this.safetyItemsDetails.controls["safetyItems"];
+    return this.logementFG.get("optionsDetails") as FormGroup;
   }
 
   next() {
     if (this.step == 1) {
       this.logement_step = true;
-      console.log("11111");
-      if (this.logementDetails.invalid) {
+      if (this.logementFG.get("logementDetails")?.invalid) {
         return;
       }
-      this.step++;
     }
     if (this.step == 2) {
       this.address_step = true;
-      console.log("2222222");
 
-      if (this.addressDetails.invalid) {
+      if (this.logementFG.get("addressDetails")?.invalid) {
         return;
       }
-      this.step++;
     }
     if (this.step == 3) {
       this.details_step = true;
-      console.log("333333");
 
-      if (this.details.invalid) {
+      if (this.logementFG.get("details")?.invalid) {
         return;
       }
-      this.step++;
     }
     if (this.step == 4) {
       this.installation_step = true;
-      console.log("4444");
-      if (this.installationDetails.invalid) {
+      if (this.selectedInstallations.length == 0) {
         return;
       }
-      this.step++;
     }
     if (this.step == 5) {
       this.critere_step = true;
-      if (this.criteresDetails.invalid) {
+      if (this.selectedCriteres.length == 0) {
         return;
       }
-      this.step++;
     }
+
     if (this.step == 6) {
       this.option_step = true;
-      if (this.optionsDetails.invalid) {
+      if (this.selectedOptions.length == 0) {
         return;
       }
-      this.step++;
     }
-    if (this.step == 7) {
-      this.safetyItem_step = true;
-      if (this.safetyItemsDetails.invalid) {
-        return;
-      }
-      this.step++;
-    }
+    this.step++;
   }
   previous() {
     this.step--;
@@ -178,15 +167,14 @@ export class AddLogementComponent {
     if (this.step == 6) {
       this.option_step = false;
     }
-    if (this.step == 7) {
-      this.safetyItem_step = false;
-    }
   }
 
   submit() {
-    if (this.step == 4) {
-      this.installation_step = true;
-      if (this.installations.invalid) {
+    console.log(this.logementFG.value);
+
+    if (this.step == 6) {
+      this.option_step = true;
+      if (this.options.invalid) {
         return;
       }
     }
@@ -197,19 +185,47 @@ export class AddLogementComponent {
       this.liste_installations = res;
     });
   }
+
   listeCriteres() {
     this.critereService.getCriteres().subscribe((res: any) => {
       this.liste_criteres = res;
     });
   }
-  listeSafetyItems() {
-    this.safetyItemService.getSafetyItems().subscribe((res: any) => {
-      this.liste_safetyItems = res;
-    });
-  }
+
   listeOptions() {
     this.optionService.getOptions().subscribe((res: any) => {
       this.liste_options = res;
     });
+  }
+
+  checkInstallation(event: any, value: any) {
+    if (event.target.checked) this.selectedInstallations.push(value);
+    if (!event.target.checked) {
+      let index = this.selectedInstallations.indexOf(value);
+      if (index != -1) {
+        this.selectedInstallations.splice(index, 1);
+      }
+    }
+  }
+
+  checkCritere(event: any, value: any) {
+    if (event.target.checked) this.selectedCriteres.push(value);
+    if (!event.target.checked) {
+      let index = this.selectedCriteres.indexOf(value);
+      if (index != -1) {
+        this.selectedCriteres.splice(index, 1);
+      }
+    }
+    console.log(this.logementFG.value);
+  }
+
+  checkOption(event: any, value: any) {
+    if (event.target.checked) this.selectedOptions.push(value);
+    if (!event.target.checked) {
+      let index = this.selectedOptions.indexOf(value);
+      if (index != -1) {
+        this.selectedOptions.splice(index, 1);
+      }
+    }
   }
 }

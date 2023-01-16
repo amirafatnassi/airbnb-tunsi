@@ -1,5 +1,4 @@
 import { Component, AfterViewInit, OnInit } from "@angular/core";
-import { UserService } from "../services/user/user.service";
 //declare var require: any;
 
 @Component({
@@ -7,11 +6,12 @@ import { UserService } from "../services/user/user.service";
 })
 export class DashboardComponent implements AfterViewInit, OnInit {
   subtitle: string;
-  constructor(private userService:UserService) {
+
+  constructor() {
     this.subtitle = "This is some text within a card block.";
   }
   ngOnInit(): void {
-    
+   
   }
   ngAfterViewInit() {}
 }

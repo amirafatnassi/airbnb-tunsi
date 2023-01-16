@@ -1,362 +1,400 @@
 <div class="row">
-  <div class="col-md-12 col-md-offset-3">
-    <!-- step 1 logement -->
-    <form [formGroup]="logementDetails" id="msform">
-      <!-- progressbar -->
-      <ul id="progressbar">
-        <li [ngClass]="step >= 1 ? 'active ' : 'inactive'">Logement</li>
-        <li [ngClass]="step >= 2 ? 'active' : 'inactive'">Adresse</li>
-        <li [ngClass]="step == 3 ? 'active' : 'inactive'">Détails</li>
-        <li [ngClass]="step == 4 ? 'active' : 'inactive'">Installations</li>
-        <li [ngClass]="step == 5 ? 'active' : 'inactive'">Critères</li>
-        <li [ngClass]="step == 6 ? 'active' : 'inactive'">Options</li>
-        <li [ngClass]="step == 7 ? 'active' : 'inactive'">Safety items</li>
-      </ul>
+  <form [formGroup]="logementFG" id="msform">
+    <div class="col-md-12 col-md-offset-3">
+      <!-- step 1 logement -->
+      <div formGroupName="logementDetails" id="msform">
+        <!-- progressbar -->
+        <ul id="progressbar">
+          <li [ngClass]="step >= 1 ? 'active' : 'inactive'">Logement</li>
+          <li [ngClass]="step >= 2 ? 'active' : 'inactive'">Adresse</li>
+          <li [ngClass]="step >= 3 ? 'active' : 'inactive'">Détails</li>
+          <li [ngClass]="step >= 4 ? 'active' : 'inactive'">Installations</li>
+          <li [ngClass]="step >= 5 ? 'active' : 'inactive'">Critères</li>
+          <li [ngClass]="step >= 6 ? 'active' : 'inactive'">Options</li>
+          <li [ngClass]="step == 7 ? 'active' : 'inactive'">Safety items</li>
+        </ul>
 
-      <!-- fieldsets -->
-      <fieldset *ngIf="step == 1">
-        <h2 class="fs-title">Ajouter logement</h2>
-        <input
-          type="text"
-          formControlName="titre"
-          [ngClass]="{ 'is-invalid': logement_step && logement.titre.errors }"
-          placeholder="titre"
-        />
-        <div *ngIf="logement_step && logementDetails.controls.titre.errors">
-          <div *ngIf="logement.titre.errors?.required">Titre required</div>
-        </div>
-        <textarea
-          type="text"
-          formControlName="description"
-          name="description"
-          placeholder="description"
-          rows="5"
-        ></textarea>
-        <div
-          *ngIf="logement_step && logementDetails.controls.description.errors"
-        >
-          <div *ngIf="logement.description.errors?.required">
+        <!-- fieldsets -->
+        <fieldset *ngIf="step == 1">
+          <h2 class="fs-title">Ajouter logement</h2>
+          <label for="titre">Titre:</label>
+          <input
+            type="text"
+            formControlName="titre"
+            [ngClass]="{
+              'is-invalid': logement_step && logement.controls['titre'].errors
+            }"
+            placeholder="titre"
+          />
+          <div
+            class="text-danger"
+            *ngIf="logement_step && logement.controls['titre'].errors"
+          >
+            Titre required
+          </div>
+          <label for="description">Description:</label>
+          <textarea
+            type="text"
+            formControlName="description"
+            name="description"
+            placeholder="description"
+            rows="5"
+          ></textarea>
+          <div
+            class="text-danger"
+            *ngIf="logement_step && logement.controls['description'].errors"
+          >
             Description est obligatoire
           </div>
-        </div>
-        <input
-          (click)="next()"
-          type="button"
-          name="next"
-          class="next action-button"
-          value="Suivant"
-        />
-      </fieldset>
-    </form>
+          <input
+            (click)="next()"
+            type="button"
+            name="next"
+            class="next action-button"
+            value="Suivant"
+          />
+        </fieldset>
+      </div>
 
-    <!-- step 2 adresse -->
-    <form [formGroup]="addressDetails" id="msform">
-      <fieldset *ngIf="step == 2">
-        <h2 class="fs-title">Détail addresse</h2>
-        <div class="row">
-          <div class="col-6">
-            <input type="text" formControlName="ville" placeholder="ville" />
-            <div *ngIf="address_step && addressDetails.controls.ville.errors">
-              <div *ngIf="address.ville.errors?.required">
+      <!-- step 2 adresse -->
+      <div formGroupName="addressDetails" id="msform">
+        <fieldset *ngIf="step == 2">
+          <h2 class="fs-title">Détail addresse</h2>
+          <div class="row">
+            <div class="col-6">
+              <label for="ville">Ville</label>
+              <input type="text" formControlName="ville" placeholder="ville" />
+              <div
+                class="text-danger"
+                *ngIf="address_step && address.controls['ville'].errors"
+              >
                 Ville obligatoire
               </div>
             </div>
-          </div>
-          <div class="col-6">
-            <input type="text" formControlName="pays" placeholder="pays" />
-            <div *ngIf="address_step && addressDetails.controls.pays.errors">
-              <div *ngIf="address.pays.errors?.required">Pays obligatoire</div>
-            </div>
-          </div>
-        </div>
-        <input formControlName="rue" placeholder="rue" />
-        <div *ngIf="address_step && addressDetails.controls.rue.errors">
-          <div *ngIf="address.rue.errors?.required">Rue est obligatoire</div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <input type="text" formControlName="cp" placeholder="cp" />
-            <div *ngIf="address_step && addressDetails.controls.cp.errors">
-              <div *ngIf="address.cp.errors?.required">
-                code postal obligatoire
+            <div class="col-6">
+              <label for="pays">Pays:</label>
+              <input type="text" formControlName="pays" placeholder="pays" />
+              <div
+                class="text-danger"
+                *ngIf="address_step && address.controls['pays'].errors"
+              >
+                Pays obligatoire
               </div>
             </div>
           </div>
-          <div class="col-6">
-            <input type="text" formControlName="num" placeholder="num" />
-            <div *ngIf="address_step && addressDetails.controls.num.errors">
-              <div *ngIf="address.num.errors?.required">
+          <label for="rue">Rue:</label>
+          <input formControlName="rue" placeholder="rue" />
+          <div
+            class="text-danger"
+            *ngIf="address_step && address.controls['rue'].errors"
+          >
+            Rue est obligatoire
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label for="cp">Code postal:</label>
+              <input type="text" formControlName="cp" placeholder="cp" />
+              <div
+                class="text-danger"
+                *ngIf="address_step && address.controls['cp'].errors"
+              >
+                code postal obligatoire
+              </div>
+            </div>
+            <div class="col-6">
+              <label for="num">N°:</label>
+              <input type="text" formControlName="num" placeholder="num" />
+              <div
+                class="text-danger"
+                *ngIf="address_step && address.controls['num'].errors"
+              >
                 Num de propriété obligatoire
               </div>
             </div>
           </div>
-        </div>
-        <input
-          (click)="previous()"
-          type="button"
-          name="previous"
-          class="previous action-button-previous"
-          value="Précèdant"
-        />
-        <input
-          (click)="next()"
-          type="button"
-          name="next"
-          class="next action-button"
-          value="Suivant"
-        />
-      </fieldset>
-    </form>
+          <input
+            (click)="previous()"
+            type="button"
+            name="previous"
+            class="previous action-button-previous"
+            value="Précèdant"
+          />
+          <input
+            (click)="next()"
+            type="button"
+            name="next"
+            class="next action-button"
+            value="Suivant"
+          />
+        </fieldset>
+      </div>
 
-    <!-- step 3 details -->
-    <form [formGroup]="details" id="msform">
-      <fieldset *ngIf="step == 3">
-        <h2 class="fs-title">Détails</h2>
-        <label for="nb_invites">Nombre d'invités (max):</label>
-        <input
-          type="number"
-          formControlName="nb_invites"
-          placeholder="Highest Qualification"
-        />
-        <div *ngIf="details_step && details.controls.nb_invites.errors">
-          <div *ngIf="detail.nb_invites.errors?.required">
-            Nombre d'invités est obligatoire
-          </div>
-        </div>
-        <label for="nb_chambres">Nombre de chambres:</label>
-        <input
-          type="number"
-          formControlName="nb_chambres"
-          placeholder="nb_chambres"
-        />
-        <div *ngIf="details_step && details.controls.nb_chambres.errors">
-          <div *ngIf="detail.nb_chambres.errors?.required">
-            nombre de chambres est obligatoire
-          </div>
-        </div>
-        <label for="nb_lits">Nombre de lits:</label>
-        <input
-          type="number"
-          formControlName="nb_lits"
-          placeholder="Total Marks"
-        />
-        <div *ngIf="details_step && details.controls.nb_lits.errors">
-          <div *ngIf="detail.nb_lits.errors?.required">
-            Nombre de lits obligatoire!
-          </div>
-        </div>
-        <label for="nb_salledeBain">Nombre de salles de bain:</label>
-        <input
-          type="number"
-          formControlName="nb_salledeBain"
-          placeholder="Total Marks"
-        />
-        <div *ngIf="details_step && details.controls.nb_salledeBain.errors">
-          <div *ngIf="detail.nb_salledeBain.errors?.required">
-            Nombre de salles de bain obligatoire !
-          </div>
-        </div>
+      <!-- step 3 details -->
+      <div formGroupName="details" id="msform">
+        <fieldset *ngIf="step == 3">
+          <h2 class="fs-title">Détails</h2>
 
-        <input
-          (click)="previous()"
-          type="button"
-          name="Précédant"
-          class="previous action-button-previous"
-          value="Previous"
-        />
-        <input
-          (click)="next()"
-          type="button"
-          name="next"
-          class="next action-button"
-          value="Suivant"
-        />
-      </fieldset>
-    </form>
-
-    <!-- step 4 installations -->
-    <form [formGroup]="installationDetails" id="msform">
-      <fieldset *ngIf="step == 4">
-        <p class="h4">Liste des installations</p>
-        <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
-        <div class="row gx-lg-5">
-          <div class="col-md-3 mb-4" *ngFor="let i of liste_installations">
-            <label>
+          <div class="row">
+            <div class="col-6">
+              <label for="nb_invites">Nombre d'invités (max):</label>
               <input
-                id="radioDefault1"
-                type="radio"
-                name="defaultGroup"
-                class="card-input-element"
+                type="number"
+                formControlName="nb_invites"
+                placeholder="1"
               />
-
-              <div class="card card-input">
-                <div class="card-body">
-                  <p class="text-uppercase fw-bold text-muted">{{ i.lib }}</p>
-                  <span *ngIf="i.icon"
-                    ><img
-                      [src]="i.icon"
-                      alt="user"
-                      width="45"
-                      class="rounded-circle"
-                  /></span>
-                </div>
+              <div
+                class="text-danger"
+                *ngIf="details_step && detail.controls['nb_invites'].errors"
+              >
+                Nombre d'invités est obligatoire
               </div>
-            </label>
-          </div>
-        </div>
-
-        <input
-          (click)="previous()"
-          type="button"
-          name="previous"
-          class="previous action-button-previous"
-          value="Précèdant"
-        />
-        <input
-          (click)="next()"
-          type="button"
-          name="next"
-          class="next action-button"
-          value="Suivant"
-        />
-      </fieldset>
-    </form>
-
-    <!-- step 5 criteres -->
-    <form [formGroup]="criteresDetails" id="msform">
-      <fieldset *ngIf="step == 5">
-        <p class="h4">Critères</p>
-        <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
-        <div class="row gx-lg-5">
-          <div class="col-md-3 mb-4" *ngFor="let i of liste_criteres">
-            <label>
+            </div>
+            <div class="col-6">
+              <label for="nb_chambres">Nombre de chambres:</label>
               <input
-                id="radioDefault1"
-                type="radio"
-                name="defaultGroup"
-                class="card-input-element"
+                type="number"
+                formControlName="nb_chambres"
+                placeholder="1"
               />
-
-              <div class="card card-input">
-                <div class="card-body">
-                  <p class="text-uppercase fw-bold text-muted">{{ i.lib }}</p>
-                </div>
+              <div
+                class="text-danger"
+                *ngIf="details_step && detail.controls['nb_chambres'].errors"
+              >
+                nombre de chambres est obligatoire
               </div>
-            </label>
+            </div>
           </div>
-        </div>
-
-        <input
-          (click)="previous()"
-          type="button"
-          name="previous"
-          class="previous action-button-previous"
-          value="Précèdant"
-        />
-        <input
-          (click)="next()"
-          type="button"
-          name="next"
-          class="next action-button"
-          value="Suivant"
-        />
-      </fieldset>
-    </form>
-
-    <!-- step 6 options -->
-    <form [formGroup]="optionsDetails" id="msform">
-      <fieldset *ngIf="step == 6">
-        <p class="h4">Options</p>
-        <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
-        <div class="row gx-lg-5">
-          <div class="col-md-3 mb-4" *ngFor="let i of liste_options">
-            <label>
+          <div class="row">
+            <div class="col-6">
+              <label for="nb_lits">Nombre de lits:</label>
+              <input type="number" formControlName="nb_lits" placeholder="1" />
+              <div
+                class="text-danger"
+                *ngIf="details_step && detail.controls['nb_lits'].errors"
+              >
+                Nombre de lits obligatoire!
+              </div>
+            </div>
+            <div class="col-6">
+              <label for="nb_salledeBain">Nombre de salles de bain:</label>
               <input
-                id="radioDefault1"
-                type="radio"
-                name="defaultGroup"
-                class="card-input-element"
+                type="number"
+                formControlName="nb_salledeBain"
+                placeholder="1"
               />
-
-              <div class="card card-input">
-                <div class="card-body">
-                  <p class="text-uppercase fw-bold text-muted">{{ i.lib }}</p>
-                  <span *ngIf="i.icon"
-                    ><img
-                      [src]="i.icon"
-                      alt="user"
-                      width="45"
-                      class="rounded-circle"
-                  /></span>
-                </div>
+              <div
+                class="text-danger"
+                *ngIf="details_step && detail.controls['nb_salledeBain'].errors"
+              >
+                Nombre de salles de bain obligatoire !
               </div>
-            </label>
+            </div>
           </div>
-        </div>
 
-        <input
-          (click)="previous()"
-          type="button"
-          name="previous"
-          class="previous action-button-previous"
-          value="Précèdant"
-        />
-        <input
-          (click)="next()"
-          type="button"
-          name="next"
-          class="next action-button"
-          value="Suivant"
-        />
-      </fieldset>
-    </form>
+          <input
+            (click)="previous()"
+            type="button"
+            name="Précédant"
+            class="previous action-button-previous"
+            value="Previous"
+          />
+          <input
+            (click)="next()"
+            type="button"
+            name="next"
+            class="next action-button"
+            value="Suivant"
+          />
+        </fieldset>
+      </div>
 
-    <!-- step 7 safety items -->
-    <form [formGroup]="safetyItemsDetails" id="msform">
-      <fieldset *ngIf="step == 7">
-        <p class="h4">Change plan</p>
-        <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
-        <div class="row gx-lg-5">
-          <div class="col-md-3 mb-4" *ngFor="let i of liste_safetyItems">
-            <label>
-              <input
-                id="radioDefault1"
-                type="radio"
-                name="defaultGroup"
-                class="card-input-element"
-              />
+      <!-- step 4 installations -->
+      <div formGroupName="installationDetails" id="msform">
+        <fieldset *ngIf="step == 4">
+          <p class="h4">Liste des installations</p>
+          <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
+          <div class="row gx-lg-5">
+            <div class="col-md-3 mb-4" *ngFor="let i of liste_installations">
+              <label>
+                <input
+                  id="radioDefault1"
+                  type="checkbox"
+                  name="defaultGroup"
+                  class="card-input-element"
+                  [checked]="selectedInstallations.includes(i._id)"
+                  (click)="checkInstallation($event, i._id)"
+                />
 
-              <div class="card card-input">
-                <div class="card-body">
-                  <p class="text-uppercase fw-bold text-muted">{{ i.lib }}</p>
-                  <span *ngIf="i.icon"
-                    ><img
-                      [src]="i.icon"
-                      alt="user"
-                      width="45"
-                      class="rounded-circle"
-                  /></span>
+                <div class="card card-input">
+                  <div class="card-body">
+                    <p class="text-uppercase fw-bold text-muted">{{ i.lib }}</p>
+                    <span *ngIf="i.icon"
+                      ><img [src]="i.icon" alt="user" width="45"
+                    /></span>
+                  </div>
                 </div>
-              </div>
-            </label>
+              </label>
+            </div>
           </div>
-        </div>
 
-        <input
-          (click)="previous()"
-          type="button"
-          name="previous"
-          class="previous action-button-previous"
-          value="Précèdant"
-        />
-        <input
-          (click)="submit()"
-          type="submit"
-          name="submit"
-          class="submit action-button"
-          value="Submit"
-        />
-      </fieldset>
-    </form>
-  </div>
+          <input
+            (click)="previous()"
+            type="button"
+            name="previous"
+            class="previous action-button-previous"
+            value="Précèdant"
+          />
+          <input
+            (click)="next()"
+            type="button"
+            name="next"
+            class="next action-button"
+            value="Suivant"
+          />
+        </fieldset>
+      </div>
+
+      <!-- step 5 criteres -->
+      <div formGroupName="critereDetails" id="msform">
+        <fieldset *ngIf="step == 5">
+          <p class="h4">Liste des critères</p>
+          <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
+          <div class="row gx-lg-5">
+            <div class="col-md-3 mb-4" *ngFor="let c of liste_criteres">
+              <label>
+                <input
+                  id="radioDefault1"
+                  type="checkbox"
+                  name="defaultGroup"
+                  class="card-input-element"
+                  [checked]="selectedCriteres.includes(c._id)"
+                  (click)="checkCritere($event, c._id)"
+                />
+
+                <div class="card card-input">
+                  <div class="card-body">
+                    <p class="text-uppercase fw-bold">{{ c.lib }}</p>
+                    <span *ngIf="c.icon"
+                      ><img
+                        [src]="c.icon"
+                        alt="user"
+                        width="45"
+                        class="rounded-circle"
+                    /></span>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <input
+            (click)="previous()"
+            type="button"
+            name="previous"
+            class="previous action-button-previous"
+            value="Précèdant"
+          />
+          <input
+            (click)="next()"
+            type="button"
+            name="next"
+            class="next action-button"
+            value="Suivant"
+          />
+        </fieldset>
+      </div>
+
+      <!-- step 6 options -->
+      <div formGroupName="optionDetails" id="msform">
+        <fieldset *ngIf="step == 6">
+          <p class="h4">Liste des options</p>
+          <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
+          <div class="row gx-lg-5">
+            <div class="col-md-3 mb-4" *ngFor="let o of liste_options">
+              <label>
+                <input
+                  id="radioDefault1"
+                  type="checkbox"
+                  name="defaultGroup"
+                  class="card-input-element"
+                  [checked]="selectedCriteres.includes(o._id)"
+                  (click)="checkCritere($event, o._id)"
+                />
+
+                <div class="card card-input">
+                  <div class="card-body">
+                    <p class="text-uppercase fw-bold text-muted">{{ o.lib }}</p>
+                    <span *ngIf="o.icon"
+                      ><img [src]="o.icon" alt="user" width="45"
+                    /></span>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <input
+            (click)="previous()"
+            type="button"
+            name="previous"
+            class="previous action-button-previous"
+            value="Précèdant"
+          />
+          <input
+            (click)="next()"
+            type="button"
+            name="next"
+            class="next action-button"
+            value="Suivant"
+          />
+        </fieldset>
+      </div>
+
+      <!-- step 7 safety items -->
+      <div formGroupName="safetyItemDetails" id="msform">
+        <fieldset *ngIf="step == 7">
+          <p class="h4">Liste des items de sécurité</p>
+          <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
+          <div class="row gx-lg-5">
+            <div class="col-md-3 mb-4" *ngFor="let o of liste_safetyItems">
+              <label>
+                <input
+                  id="radioDefault1"
+                  type="checkbox"
+                  name="defaultGroup"
+                  class="card-input-element"
+                  [checked]="selectedCriteres.includes(o._id)"
+                  (click)="checkCritere($event, o._id)"
+                />
+
+                <div class="card card-input">
+                  <div class="card-body">
+                    <p class="text-uppercase fw-bold text-muted">{{ o.lib }}</p>
+                    <span *ngIf="o.icon"
+                      ><img [src]="o.icon" alt="user" width="45"
+                    /></span>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <input
+            (click)="previous()"
+            type="button"
+            name="previous"
+            class="previous action-button-previous"
+            value="Précèdant"
+          />
+          <input
+            (click)="next()"
+            type="button"
+            name="next"
+            class="next action-button"
+            value="Suivant"
+          />
+        </fieldset>
+      </div>
+    </div>
+  </form>
 </div>

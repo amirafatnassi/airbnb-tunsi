@@ -1,31 +1,56 @@
 <div class="card">
-    <div class="card-title">
-      <!-- title -->
-      <h4 class="card-title">Liste de safety items</h4>
-  <button class="btn btn-rounded btn-primary pull-right" routerLink="/safety_items/add"> <i class="bi bi-plus"></i> Nouveau safety item</button>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table align-middle">
-          <thead>
-            <tr>
-              <th class="text-dark font-medium fs-4">Id</th>
-              <th class="text-dark font-medium fs-4">Lib</th>
-              <th class="text-dark font-medium fs-4">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let s of safetyItems">
-              <td class="fs-4">{{ s._id }}</td>
-              <td class="fs-4">{{ s.lib }}</td>
-              <td>
-                <button class="btn btn-rounded btn-success" routerLink="/safety_items/update/{{s._id}}"> <i class="bi bi-pencil"></i>Edit</button>
-                <button class="btn btn-rounded btn-danger" (click)="suppSafetyItem(s._id)"><i class="bi bi-trash"></i> Supprimer</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="card-title">
+    <!-- title -->
+    <h4 class="card-title">Liste de safety items</h4>
+    <button
+      class="btn btn-rounded btn-primary pull-right"
+      routerLink="/safety_items/add"
+    >
+      <i class="bi bi-plus"></i> Nouveau safety item
+    </button>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+      class="table table-bordered table-hover"
+      *ngIf="safetyItems.length > 0"
+        datatable
+        [dtOptions]="dtOptions"
+      >
+        <thead>
+          <tr>
+            <th class="text-dark font-medium fs-4">#</th>
+            <th class="text-dark font-medium fs-4">Lib</th>
+            <th class="text-dark font-medium fs-4">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of safetyItems">
+            <td class="fs-4">
+              <span *ngIf="s.icon"
+                ><img
+                  [src]="s.icon"
+                  width="45"
+                  class="rounded"
+              /></span>
+            </td>
+            <td class="fs-4">{{ s.lib }}</td>
+            <td>
+              <button
+                class="btn rounded-circle btn-success"
+                routerLink="/safety_items/update/{{ s._id }}"
+              >
+                <i class="bi bi-pencil"></i></button>
+              <button
+                class="btn rounded-circle btn-danger"
+                (click)="suppSafetyItem(s._id)"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  
+</div>

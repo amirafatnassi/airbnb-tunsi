@@ -19,7 +19,6 @@ token:any
     private router: ActivatedRoute
   ) {}
   ngOnInit() {
-    
     this.token=this.router.snapshot.params["token"]
   }
 

@@ -34,7 +34,7 @@ exports.login = async (req, res) => {
         result.password
       );
       if (checkPassword) {
-        const data = { userId: result._id, userEmail: result.email };
+        const data = { userId: result._id};
         const token = jwt.sign(data, process.env.JWTKEY, { expiresIn: "1d" });
         res.send({ token, message: "logged in successfully" });
       } else {
@@ -94,16 +94,20 @@ exports.forgetPassword = async (req, res) => {
 
 exports.resetPassword = async (req, res) => {
   try {
-      const token = await tokens.findOne({token:req.body.token});
-      console.log(token);
-      if (token) {
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(req.body.password, salt);
-        await users.findByIdAndUpdate(token.userId, { password: hash },{new:true});
-        res.status(200).send({ message: "password updated" });
-      } else {
-        res.status(400).send({ message: "token invalid" });
-      }
+    const token = await tokens.findOne({ token: req.body.token });
+    console.log(token);
+    if (token) {
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(req.body.password, salt);
+      await users.findByIdAndUpdate(
+        token.userId,
+        { password: hash },
+        { new: true }
+      );
+      res.status(200).send({ message: "password updated" });
+    } else {
+      res.status(400).send({ message: "token invalid" });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: error.message || "An error occured" });
@@ -119,7 +123,6 @@ exports.getUsers = async (req, res) => {
   }
 };
 
-
 exports.getUser = async (req, res) => {
   try {
     const user = await users.findById(req.params.id);
@@ -133,7 +136,6 @@ exports.getUser = async (req, res) => {
   }
 };
 
-
 exports.updateUser = async (req, res) => {
   try {
     await users.findByIdAndUpdate(req.params.id, req.body);
@@ -144,12 +146,9 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-
 exports.deleteUser = async (req, res) => {
   try {
-    const deletedUser = await users.findByIdAndDelete(
-      req.params.id
-    );
+    const deletedUser = await users.findByIdAndDelete(req.params.id);
     res.status(200).send(deletedUser);
   } catch (error) {
     res.status(500).send({ message: error.message || "erreur serveur" });

@@ -17,7 +17,6 @@ export class LoginComponent {
     private route: Router,
     private toastr: ToastrService
   ) {}
-  ngOnInit() {}
 
   loginForm = new FormGroup({
     email: new FormControl("", [Validators.required, Validators.email]),
@@ -26,24 +25,20 @@ export class LoginComponent {
 
   login() {
     this.validForm = true;
-    console.log(this.loginForm.value);
     if (this.loginForm.invalid) {
       return;
     }
     this.userService.login(this.loginForm.value).subscribe(
       (res: any) => {
-        console.log(res);
         if (res) {
           this.toastr.success(res.message, "Success!");
-          console.log(res.token);
           localStorage.setItem("token", res.token);
-          this.route.navigate(['/dashboard']);
+          this.route.navigate(["/dashboard"]);
         }
       },
       (error) => {
         console.log(error);
         this.toastr.error(error.error.message, "Error!");
-        // alert(error.error.message);
       }
     );
   }
