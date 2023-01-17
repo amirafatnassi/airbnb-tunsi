@@ -270,17 +270,9 @@
                   [checked]="selectedCriteres.includes(c._id)"
                   (click)="checkCritere($event, c._id)"
                 />
-
                 <div class="card card-input">
                   <div class="card-body">
                     <p class="text-uppercase fw-bold">{{ c.lib }}</p>
-                    <span *ngIf="c.icon"
-                      ><img
-                        [src]="c.icon"
-                        alt="user"
-                        width="45"
-                        class="rounded-circle"
-                    /></span>
                   </div>
                 </div>
               </label>
@@ -317,8 +309,8 @@
                   type="checkbox"
                   name="defaultGroup"
                   class="card-input-element"
-                  [checked]="selectedCriteres.includes(o._id)"
-                  (click)="checkCritere($event, o._id)"
+                  [checked]="selectedOptions.includes(o._id)"
+                  (click)="checkOption($event, o._id)"
                 />
 
                 <div class="card card-input">
@@ -363,8 +355,8 @@
                   type="checkbox"
                   name="defaultGroup"
                   class="card-input-element"
-                  [checked]="selectedCriteres.includes(o._id)"
-                  (click)="checkCritere($event, o._id)"
+                  [checked]="selectedSafetyItems.includes(o._id)"
+                  (click)="checkSafetyItem($event, o._id)"
                 />
 
                 <div class="card card-input">
@@ -387,11 +379,11 @@
             value="Précèdant"
           />
           <input
-            (click)="next()"
-            type="button"
-            name="next"
-            class="next action-button"
-            value="Suivant"
+            (click)="submit()"
+            type="submit"
+            name="submit"
+            class="submit action-button"
+            value="Submit"
           />
         </fieldset>
       </div>

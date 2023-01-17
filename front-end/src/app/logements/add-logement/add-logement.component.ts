@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import {
-  FormBuilder,
   FormControl,
   FormGroup,
   Validators,
@@ -9,7 +8,6 @@ import { CritereService } from "../../services/critere/critere.service";
 import { OptionService } from "../../services/option/option.service";
 import { SafetyItemService } from "../../services/safetyItem/safety-item.service";
 import { InstallationService } from "../../services/installation/installation.service";
-
 import { LogementService } from "../../services/logement/logement.service";
 
 @Component({
@@ -43,10 +41,11 @@ export class AddLogementComponent {
   step = 1;
 
   constructor(
+    private logementService: LogementService,
     private installationService: InstallationService,
     private critereService: CritereService,
     private optionService: OptionService,
-    private safetyItem:SafetyItemService
+    private safetyItemService:SafetyItemService
   ) {}
 
   ngOnInit() {
@@ -77,11 +76,15 @@ export class AddLogementComponent {
       optionDetails: new FormGroup({
         options: new FormControl(this.selectedOptions),
       }),
+      safetyItemDetails: new FormGroup({
+        safetyItems: new FormControl(this.selectedSafetyItems),
+      }),
     });
 
     this.listeInstallations();
     this.listeCriteres();
     this.listeOptions();
+    this.listeSafetyItems();
   }
 
   get logement() {
@@ -96,13 +99,14 @@ export class AddLogementComponent {
   get installations() {
     return this.logementFG.get("installationDetails") as FormGroup;
   }
-
   get criteres() {
     return this.logementFG.get("criteresDetails") as FormGroup;
   }
-
   get options() {
     return this.logementFG.get("optionsDetails") as FormGroup;
+  } 
+  get safetyItems() {
+    return this.logementFG.get("safetyItemsDetails") as FormGroup;
   }
 
   next() {
@@ -138,10 +142,15 @@ export class AddLogementComponent {
         return;
       }
     }
-
     if (this.step == 6) {
       this.option_step = true;
       if (this.selectedOptions.length == 0) {
+        return;
+      }
+    }
+    if (this.step == 7) {
+      this.safetyItem_step = true;
+      if (this.selectedSafetyItems.length == 0) {
         return;
       }
     }
@@ -167,37 +176,45 @@ export class AddLogementComponent {
     if (this.step == 6) {
       this.option_step = false;
     }
+    if(this.step==7){
+      this.safetyItem_step=false;
+    }
   }
-
   submit() {
     console.log(this.logementFG.value);
-
-    if (this.step == 6) {
-      this.option_step = true;
-      if (this.options.invalid) {
+    if (this.step == 7) {
+      this.safetyItem_step = true;
+      if (this.safetyItems.invalid) {
         return;
       }
     }
+   
+    this.logementService
+      .createLogement(this.logementFG.value)
+      .subscribe((res: any) => {
+        console.log(res);
+      });
   }
-
   listeInstallations() {
     this.installationService.getInstallations().subscribe((res: any) => {
       this.liste_installations = res;
     });
   }
-
   listeCriteres() {
     this.critereService.getCriteres().subscribe((res: any) => {
       this.liste_criteres = res;
     });
   }
-
   listeOptions() {
     this.optionService.getOptions().subscribe((res: any) => {
       this.liste_options = res;
     });
   }
-
+  listeSafetyItems() {
+    this.safetyItemService.getSafetyItems().subscribe((res: any) => {
+      this.liste_safetyItems = res;
+    });
+  }
   checkInstallation(event: any, value: any) {
     if (event.target.checked) this.selectedInstallations.push(value);
     if (!event.target.checked) {
@@ -207,7 +224,6 @@ export class AddLogementComponent {
       }
     }
   }
-
   checkCritere(event: any, value: any) {
     if (event.target.checked) this.selectedCriteres.push(value);
     if (!event.target.checked) {
@@ -216,15 +232,22 @@ export class AddLogementComponent {
         this.selectedCriteres.splice(index, 1);
       }
     }
-    console.log(this.logementFG.value);
   }
-
   checkOption(event: any, value: any) {
     if (event.target.checked) this.selectedOptions.push(value);
     if (!event.target.checked) {
       let index = this.selectedOptions.indexOf(value);
       if (index != -1) {
         this.selectedOptions.splice(index, 1);
+      }
+    }
+  }
+  checkSafetyItem(event: any, value: any) {
+    if (event.target.checked) this.selectedSafetyItems.push(value);
+    if (!event.target.checked) {
+      let index = this.selectedSafetyItems.indexOf(value);
+      if (index != -1) {
+        this.selectedSafetyItems.splice(index, 1);
       }
     }
   }
