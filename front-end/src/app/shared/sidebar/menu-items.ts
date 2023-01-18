@@ -13,7 +13,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: 'logements',
     title: 'Logements',
-    icon: 'bi bi-layout-split',
+    icon: 'bi bi-house',
     class: '',
     extralink: false,
     submenu: []
@@ -21,7 +21,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/about',
     title: 'About',
-    icon: 'bi bi-people',
+    icon: 'bi bi-info',
     class: '',
     extralink: false,
     submenu: []
@@ -30,7 +30,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: 'installations',
     title: 'Liste des installations',
-    icon: 'bi bi-people',
+    icon: 'bi bi-hammer',
     class: '',
     extralink: false,
     submenu: []
@@ -38,7 +38,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: 'options',
     title: 'Liste des options',
-    icon: 'bi bi-people',
+    icon: 'bi bi-option',
     class: '',
     extralink: false,
     submenu: []
@@ -46,7 +46,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: 'criteres',
     title: 'Liste des critères',
-    icon: 'bi bi-people',
+    icon: 'bi bi-screwdriver',
     class: '',
     extralink: false,
     submenu: []
@@ -54,7 +54,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: 'safety_items',
     title: 'Liste de safety items',
-    icon: 'bi bi-people',
+    icon: 'bi bi-tools',
     class: '',
     extralink: false,
     submenu: []
@@ -62,7 +62,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: 'types_logements',
     title: 'Liste de types de logements',
-    icon: 'bi bi-people',
+    icon: 'bi bi-gear',
     class: '',
     extralink: false,
     submenu: []
@@ -70,7 +70,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: 'types_contrats',
     title: 'Liste de types de contrats',
-    icon: 'bi bi-people',
+    icon: 'bi bi-journal-text',
     class: '',
     extralink: false,
     submenu: []

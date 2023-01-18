@@ -2,7 +2,7 @@
   <form [formGroup]="logementFG" id="msform">
     <div class="col-md-12 col-md-offset-3">
       <!-- step 1 logement -->
-      <div formGroupName="logementDetails" id="msform">
+      <div id="msform">
         <!-- progressbar -->
         <ul id="progressbar">
           <li [ngClass]="step >= 1 ? 'active' : 'inactive'">Logement</li>
@@ -12,6 +12,7 @@
           <li [ngClass]="step >= 5 ? 'active' : 'inactive'">Critères</li>
           <li [ngClass]="step >= 6 ? 'active' : 'inactive'">Options</li>
           <li [ngClass]="step == 7 ? 'active' : 'inactive'">Safety items</li>
+          <li [ngClass]="step == 8 ? 'active' : 'inactive'">Prxi</li>
         </ul>
 
         <!-- fieldsets -->
@@ -22,13 +23,13 @@
             type="text"
             formControlName="titre"
             [ngClass]="{
-              'is-invalid': logement_step && logement.controls['titre'].errors
+              'is-invalid': logement_step && logementFG.controls['titre'].errors
             }"
             placeholder="titre"
           />
           <div
             class="text-danger"
-            *ngIf="logement_step && logement.controls['titre'].errors"
+            *ngIf="logement_step && logementFG.controls['titre'].errors"
           >
             Titre required
           </div>
@@ -42,7 +43,7 @@
           ></textarea>
           <div
             class="text-danger"
-            *ngIf="logement_step && logement.controls['description'].errors"
+            *ngIf="logement_step && logementFG.controls['description'].errors"
           >
             Description est obligatoire
           </div>
@@ -57,16 +58,16 @@
       </div>
 
       <!-- step 2 adresse -->
-      <div formGroupName="addressDetails" id="msform">
+      <div formGroupName="adresse" id="msform">
         <fieldset *ngIf="step == 2">
-          <h2 class="fs-title">Détail addresse</h2>
+          <h2 class="fs-title">Détail adressee</h2>
           <div class="row">
             <div class="col-6">
               <label for="ville">Ville</label>
               <input type="text" formControlName="ville" placeholder="ville" />
               <div
                 class="text-danger"
-                *ngIf="address_step && address.controls['ville'].errors"
+                *ngIf="adresse_step && adresse.controls['ville'].errors"
               >
                 Ville obligatoire
               </div>
@@ -76,7 +77,7 @@
               <input type="text" formControlName="pays" placeholder="pays" />
               <div
                 class="text-danger"
-                *ngIf="address_step && address.controls['pays'].errors"
+                *ngIf="adresse_step && adresse.controls['pays'].errors"
               >
                 Pays obligatoire
               </div>
@@ -86,27 +87,27 @@
           <input formControlName="rue" placeholder="rue" />
           <div
             class="text-danger"
-            *ngIf="address_step && address.controls['rue'].errors"
+            *ngIf="adresse_step && adresse.controls['rue'].errors"
           >
             Rue est obligatoire
           </div>
           <div class="row">
             <div class="col-6">
               <label for="cp">Code postal:</label>
-              <input type="text" formControlName="cp" placeholder="cp" />
+              <input type="number" formControlName="cp" placeholder="cp" />
               <div
                 class="text-danger"
-                *ngIf="address_step && address.controls['cp'].errors"
+                *ngIf="adresse_step && adresse.controls['cp'].errors"
               >
                 code postal obligatoire
               </div>
             </div>
             <div class="col-6">
               <label for="num">N°:</label>
-              <input type="text" formControlName="num" placeholder="num" />
+              <input type="number" formControlName="num" placeholder="num" />
               <div
                 class="text-danger"
-                *ngIf="address_step && address.controls['num'].errors"
+                *ngIf="adresse_step && adresse.controls['num'].errors"
               >
                 Num de propriété obligatoire
               </div>
@@ -130,7 +131,7 @@
       </div>
 
       <!-- step 3 details -->
-      <div formGroupName="details" id="msform">
+      <div id="msform">
         <fieldset *ngIf="step == 3">
           <h2 class="fs-title">Détails</h2>
 
@@ -144,7 +145,7 @@
               />
               <div
                 class="text-danger"
-                *ngIf="details_step && detail.controls['nb_invites'].errors"
+                *ngIf="details_step && logementFG.controls['nb_invites'].errors"
               >
                 Nombre d'invités est obligatoire
               </div>
@@ -158,7 +159,9 @@
               />
               <div
                 class="text-danger"
-                *ngIf="details_step && detail.controls['nb_chambres'].errors"
+                *ngIf="
+                  details_step && logementFG.controls['nb_chambres'].errors
+                "
               >
                 nombre de chambres est obligatoire
               </div>
@@ -170,7 +173,7 @@
               <input type="number" formControlName="nb_lits" placeholder="1" />
               <div
                 class="text-danger"
-                *ngIf="details_step && detail.controls['nb_lits'].errors"
+                *ngIf="details_step && logementFG.controls['nb_lits'].errors"
               >
                 Nombre de lits obligatoire!
               </div>
@@ -184,7 +187,9 @@
               />
               <div
                 class="text-danger"
-                *ngIf="details_step && detail.controls['nb_salledeBain'].errors"
+                *ngIf="
+                  details_step && logementFG.controls['nb_salledeBain'].errors
+                "
               >
                 Nombre de salles de bain obligatoire !
               </div>
@@ -209,7 +214,7 @@
       </div>
 
       <!-- step 4 installations -->
-      <div formGroupName="installationDetails" id="msform">
+      <div id="msform">
         <fieldset *ngIf="step == 4">
           <p class="h4">Liste des installations</p>
           <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
@@ -255,7 +260,7 @@
       </div>
 
       <!-- step 5 criteres -->
-      <div formGroupName="critereDetails" id="msform">
+      <div id="msform">
         <fieldset *ngIf="step == 5">
           <p class="h4">Liste des critères</p>
           <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
@@ -297,7 +302,7 @@
       </div>
 
       <!-- step 6 options -->
-      <div formGroupName="optionDetails" id="msform">
+      <div id="msform">
         <fieldset *ngIf="step == 6">
           <p class="h4">Liste des options</p>
           <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
@@ -343,7 +348,7 @@
       </div>
 
       <!-- step 7 safety items -->
-      <div formGroupName="safetyItemDetails" id="msform">
+      <div id="msform">
         <fieldset *ngIf="step == 7">
           <p class="h4">Liste des items de sécurité</p>
           <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
@@ -371,6 +376,94 @@
             </div>
           </div>
 
+          <input
+            (click)="previous()"
+            type="button"
+            name="previous"
+            class="previous action-button-previous"
+            value="Précèdant"
+          />
+          <input
+            (click)="next()"
+            type="next"
+            name="next"
+            class="next action-button"
+            value="Suivant"
+          />
+        </fieldset>
+      </div>
+
+      <!-- step 8 prix -->
+      <div id="msform">
+        <fieldset *ngIf="step == 8">
+          <h2 class="fs-title">Prix</h2>
+          <div class="row">
+            <label for="prix">Prix / nuit:</label>
+            <input type="number" formControlName="prix" placeholder="50" />
+            <div class="text-danger" *ngIf="logementFG.controls['prix'].errors">
+              Prix est obligatoire
+            </div>
+          </div>
+          <input
+            (click)="previous()"
+            type="button"
+            name="Précédant"
+            class="previous action-button-previous"
+            value="Previous"
+          />
+          <input
+            (click)="next()"
+            type="button"
+            name="next"
+            class="next action-button"
+            value="Suivant"
+          />
+        </fieldset>
+      </div>
+
+      <!-- step 9 photos -->
+      <div id="msform">
+        <fieldset *ngIf="step == 9">
+          <p class="h4">Télécharger vos meilleures photos</p>
+          <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
+          <div class="center">
+            <ngx-file-drop
+              dropZoneLabel="Drop files here"
+              (onFileDrop)="dropped($event)"
+              (onFileOver)="fileOver($event)"
+              (onFileLeave)="fileLeave($event)"
+            >
+              <ng-template
+                ngx-file-drop-content-tmp
+                let-openFileSelector="openFileSelector"
+              >
+                Il suffit de glisser et déposer les plus belles photos de votre logement içi
+                <button
+                  type="button"
+                  (click)="openFileSelector()"
+                  class="btn rounded-pill btn-secondary"
+                >
+                  Parcourir fichiers
+                </button>
+              </ng-template>
+            </ngx-file-drop>
+            <div class="upload-table">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Fichiers</th>
+                  </tr>
+                </thead>
+                <tbody class="upload-name-style">
+                  <tr *ngFor="let item of files; let i = index">
+                    <td>
+                      <strong>{{ item.relativePath }}</strong>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <input
             (click)="previous()"
             type="button"

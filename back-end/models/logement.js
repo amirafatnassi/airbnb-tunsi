@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 const LogementSchema = new Schema(
   {
     titre: String,
+    description: String,
+
     adresse: {
       rue: String,
       ville: String,
@@ -24,7 +26,6 @@ const LogementSchema = new Schema(
     typeContrat: { type: mongoose.Schema.Types.ObjectId, ref: "TypeContrat" },
     typeLogement: { type: mongoose.Schema.Types.ObjectId, ref: "TypeLogement" },
     photos: [{ type: String }],
-    description: String,
     prix: Number,
     contact_info: String,
     hote: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

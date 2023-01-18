@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 require('dotenv').config();
+const path= require('path');
 const port = 4000;
 
 require('./db/connect');
@@ -12,6 +13,7 @@ const app = express();
 app.use(cors());
 app.use(morgan("tiny"));
 app.use(bodyParser.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/users', require('./Routes/user'));
 app.use('/logements', require('./Routes/logement'));

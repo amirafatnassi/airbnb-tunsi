@@ -1,11 +1,38 @@
-const express=require("express");
-const { getLogements, getLogement, addLogement, updateLogement, deleteLogement } = require("../controllers/logementController");
-const router=express.Router();
+const express = require("express");
+const passport = require("passport");
+const {
+  getLogements,
+  getLogement,
+  addLogement,
+  updateLogement,
+  deleteLogement,
+} = require("../controllers/logementController");
+const router = express.Router();
 
-router.get("/", getLogements);
-router.get("/show/:id", getLogement);
-router.post("/add", addLogement);
-router.put("/update/:id", updateLogement);
-router.delete("/delete/:id", deleteLogement);
+router.get(
+  "/",
+  passport.authenticate("bearer", { session: false }),
+  getLogements
+);
+router.get(
+  "/show/:id",
+  passport.authenticate("bearer", { session: false }),
+  getLogement
+);
+router.post(
+  "/add",
+  [passport.authenticate("bearer", { session: false })],
+  addLogement
+);
+router.put(
+  "/update/:id",
+  passport.authenticate("bearer", { session: false }),
+  updateLogement
+);
+router.delete(
+  "/delete/:id",
+  passport.authenticate("bearer", { session: false }),
+  deleteLogement
+);
 
-module.exports=router;
+module.exports = router;

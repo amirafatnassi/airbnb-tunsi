@@ -1,3 +1,4 @@
+const { populate } = require("../models/logement");
 const logements = require("../models/logement");
 
 exports.getLogements = async (req, res) => {
@@ -22,10 +23,10 @@ exports.getLogement = async (req, res) => {
   }
 };
 
-  exports.addLogement = async (req, res) => {
-  try {
-    const logement = await logements.create(req.body);
-    res.status(200).send(logement);
+exports.addLogement = async (req, res) => {
+  try { console.log(req.body);
+ await logements.create(req.body);
+    res.status(200).send({ message: "created successfully !" });
   } catch (error) {
     res.status(500).send({ message: error.message || "erreur serveur" });
   }
