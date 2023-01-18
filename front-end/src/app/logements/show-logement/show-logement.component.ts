@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
-import { LogementService } from "app/services/logement/logement.service";
+import { ActivatedRoute } from "@angular/router";
+import { LogementService } from "../../services/logement/logement.service";
 
 @Component({
   selector: "app-show-logement",
@@ -7,11 +8,19 @@ import { LogementService } from "app/services/logement/logement.service";
   styleUrls: ["./show-logement.component.scss"],
 })
 export class ShowLogementComponent {
-  logements: any[] = [];
-
-  constructor(private logementService: LogementService) {}
+  logement: any={};
+  logementId: any;
+  constructor(private logementService: LogementService, private route:ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.logementsList();
+    this.logementId = this.route.snapshot.params['id'];
+    this.Monlogement();
+  }
+
+  Monlogement() {
+    this.logementService.getLogement(this.logementId).subscribe((res: any) => {
+      this.logement = res;
+      console.log(res);
+    });
   }
 }

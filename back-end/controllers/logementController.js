@@ -12,7 +12,7 @@ exports.getLogements = async (req, res) => {
 
 exports.getLogement = async (req, res) => {
   try {
-    const logement = await logements.findById(req.params.id);
+    const logement = await logements.findById(req.params.id).populate('options').populate('criteres').populate('installations').populate('safetyItems');
     if (logement) {
       res.status(200).send(logement);
     } else {

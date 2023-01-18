@@ -29,7 +29,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let log of logements">
-            <td class="fs-4">{{ log.titre }}</td>
+            <td class="fs-4">
+              <a routerLink="/logements/show/{{ log._id }}">{{ log.titre }}</a>
+            </td>
             <td class="fs-4">{{ log.adresse.ville }} {{ log.adresse.pays }}</td>
             <td class="fs-4">{{ log.description }}</td>
             <td class="fs-4">{{ log.prix }}</td>

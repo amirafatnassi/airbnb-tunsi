@@ -1,1 +1,69 @@
-<p>show-logement works!</p>
+<div class="d-flex justify-content-center">
+  <div class="card">
+    <h5 class="card-header">{{ logement.titre }}</h5>
+
+    <div class="card-body">
+      <p class="card-text">Description:{{ logement.description }}</p>
+      <p class="card-text">
+        Adresse: {{ logement.adresse.num }} {{ logement.adresse.rue }},{{
+          logement.adresse.cp
+        }}
+        {{ logement.adresse.ville }}, {{ logement.adresse.pays }}
+      </p>
+      <p class="card-text">nombre d'invité max: {{ logement.nb_invites }}</p>
+      <p class="card-text">Nombre de chambres: {{ logement.nb_chambres }}</p>
+      <p class="card-text">
+        Nombre de salle de bain: {{ logement.nb_salledeBain }}
+      </p>
+      <p class="card-text">Nombre de lits: {{ logement.nb_lits }}</p>
+      <p class="card-text">Adresse: {{ logement.adresse.pays }}</p>
+      <p class="card-text">
+        Prix par nuit: {{ logement.prix | currency : "TN" }}
+      </p>
+      <p class="card-text">Options:</p>
+      <ul>
+        <li *ngFor="let option of logement.options">
+            <span *ngIf="option.icon"
+            ><img
+              [src]="option.icon"
+              alt="user"
+              width="45"
+              class="rounded"
+          /></span>{{ option.lib }}
+        </li>
+      </ul>
+      <p class="card-text">Critères:</p>
+      <ul>
+        <li *ngFor="let critere of logement.criteres">
+           {{ critere.lib }}
+        </li>
+      </ul>
+      <p class="card-text">Installations:</p>
+      <ul>
+        <li *ngFor="let installation of logement.installations">
+            <span *ngIf="installation.icon"
+            ><img
+              [src]="installation.icon"
+              alt="user"
+              width="45"
+              class="rounded"
+          /></span>{{ installation.lib }}
+        </li>
+      </ul>
+      <p class="card-text">Items de sécurité:</p>
+      <ul>
+        <li *ngFor="let safetyItem of logement.safetyItems">
+            <span *ngIf="safetyItem.icon"
+            ><img
+              [src]="safetyItem.icon"
+              alt="user"
+              width="45"
+              class="rounded"
+          /></span>{{ safetyItem.lib }}
+        </li>
+      </ul>
+
+      <a routerLink="../../../logements">Logements</a>
+    </div>
+  </div>
+</div>
