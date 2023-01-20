@@ -1,22 +1,18 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { CritereService } from "../../services/critere/critere.service";
 import { OptionService } from "../../services/option/option.service";
 import { SafetyItemService } from "../../services/safetyItem/safety-item.service";
 import { InstallationService } from "../../services/installation/installation.service";
 import { LogementService } from "../../services/logement/logement.service";
-import {
-  NgxFileDropEntry,
-  FileSystemFileEntry,
-  FileSystemDirectoryEntry,
-} from "ngx-file-drop";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-add-logement",
   templateUrl: "./add-logement.component.html",
   styleUrls: ["./add-logement.component.scss"],
 })
-export class AddLogementComponent {
+export class AddLogementComponent implements OnInit {
   logementFG!: FormGroup;
 
   logement_step = false;
@@ -43,8 +39,12 @@ export class AddLogementComponent {
   uploadedPhotos: any[] = [];
 
   step = 1;
-  files: NgxFileDropEntry[] = [];
+  selectedFiles?: FileList;
+  currentFile?: any;
+  progress = 0;
+  message = "";
 
+  fileInfos?: Observable<any>;
   constructor(
     private logementService: LogementService,
     private installationService: InstallationService,
@@ -73,7 +73,6 @@ export class AddLogementComponent {
       options: new FormControl(this.selectedOptions),
       safetyItems: new FormControl(this.selectedSafetyItems),
       prix: new FormControl("", Validators.required),
-      photos: new FormControl(this.uploadedPhotos),
     });
 
     this.listeInstallations();
@@ -182,18 +181,39 @@ export class AddLogementComponent {
     }
   }
   submit() {
+    
+    
     console.log(this.logementFG.value);
     if (this.step == 9) {
       this.photos_step = true;
-      if (this.logementFG.get("photo")?.invalid) {
+      if (this.logementFG.get("photos")?.invalid) {
         return;
       }
     }
-    this.logementService
-      .createLogement(this.logementFG.value)
-      .subscribe((res: any) => {
-        console.log(res);
-      });
+    let formData = new FormData();
+    Object.keys(this.logementFG.value).forEach((fieldName) => {
+      if (fieldName == 'adresse') {
+        let adress = {
+          rue:this.adresse.controls.rue.value,
+          cp:this.adresse.controls.cp.value,
+          num:this.adresse.controls.num.value,
+          ville:this.adresse.controls.ville.value,
+          pays:this.adresse.controls.pays.value
+        }
+        formData.append(fieldName, JSON.stringify(adress));
+      } else {
+        
+        formData.append(fieldName, this.logementFG.value[fieldName]);
+      }
+    });
+    
+    for (let i = 0; i < this.selectedFiles!.length; i++) {
+      formData.append('photos',this.selectedFiles![i],this.selectedFiles![i].name)
+    }
+
+    this.logementService.createLogement(formData).subscribe((res: any) => {
+      console.log(res);
+    });
   }
   listeInstallations() {
     this.installationService.getInstallations().subscribe((res: any) => {
@@ -252,45 +272,10 @@ export class AddLogementComponent {
     }
   }
 
-  public dropped(files: NgxFileDropEntry[]) {
-    this.files = files;
-    for (const droppedFile of files) {
-      // Is it a file?
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-          // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
-
-          /**
-          // You could upload it like this:
-          const formData = new FormData()
-          formData.append('logo', file, relativePath)
-
-          // Headers
-          const headers = new HttpHeaders({
-            'security-token': 'mytoken'
-          })
-
-          this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-          .subscribe(data => {
-            // Sanitized logo returned from backend
-          })
-          **/
-        });
-      } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
-      }
-    }
-  }
-
-  public fileOver(event:any) {
-    console.log(event);
-  }
-
-  public fileLeave(event:any) {
-    console.log(event);
+  onSelectFile(event: any) {
+    
+    this.selectedFiles = event.target.files;
+    console.log( event.target.files);
+    
   }
 }

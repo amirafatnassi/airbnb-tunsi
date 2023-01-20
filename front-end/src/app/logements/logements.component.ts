@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 export class LogementsComponent {
   logements: any[] = [];
   dtOptions: DataTables.Settings = {};
+  cropWidth = 75;
 
   constructor(private logementService: LogementService) {}
 
@@ -43,8 +44,8 @@ export class LogementsComponent {
         this.logementService
           .deleteLogement(id)
           .subscribe((res: any) => {
-            console.log("Logement supprimé !");
             this.ngOnInit();
+            console.log("Logement supprimé !");
           });
       }
     });

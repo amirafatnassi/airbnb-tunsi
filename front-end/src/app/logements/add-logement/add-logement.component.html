@@ -426,44 +426,21 @@
         <fieldset *ngIf="step == 9">
           <p class="h4">Télécharger vos meilleures photos</p>
           <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
-          <div class="center">
-            <ngx-file-drop
-              dropZoneLabel="Drop files here"
-              (onFileDrop)="dropped($event)"
-              (onFileOver)="fileOver($event)"
-              (onFileLeave)="fileLeave($event)"
-            >
-              <ng-template
-                ngx-file-drop-content-tmp
-                let-openFileSelector="openFileSelector"
-              >
-                Il suffit de glisser et déposer les plus belles photos de votre logement içi
-                <button
-                  type="button"
-                  (click)="openFileSelector()"
-                  class="btn rounded-pill btn-secondary"
-                >
-                  Parcourir fichiers
-                </button>
-              </ng-template>
-            </ngx-file-drop>
-            <div class="upload-table">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Fichiers</th>
-                  </tr>
-                </thead>
-                <tbody class="upload-name-style">
-                  <tr *ngFor="let item of files; let i = index">
-                    <td>
-                      <strong>{{ item.relativePath }}</strong>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+
+          <div class="row">
+            <h3>upload fichier svp</h3>
+            <div class="col-8">
+              <label class="btn btn-default p-0">
+                <input type="file" multiple (change)="onSelectFile($event)" />
+              </label>
             </div>
+
+            
           </div>
+
+          
+         
+          
           <input
             (click)="previous()"
             type="button"

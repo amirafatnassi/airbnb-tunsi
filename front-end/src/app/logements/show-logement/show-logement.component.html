@@ -1,69 +1,106 @@
-<div class="d-flex justify-content-center">
-  <div class="card">
-    <h5 class="card-header">{{ logement.titre }}</h5>
+<div class="card">
+  <h5 class="card-header">
+    <legend><span class="fa fa-home"></span> {{ logement.titre }}</legend>
+    <div class="d-flex">
+      <div *ngFor="let i of logement.rating">
+        <span *ngIf="i==1" class="fa fa-star"></span>
+        <span *ngIf="i==0" class="fa fa-star-o"></span>
+      </div>
+    </div>
+  </h5>
 
-    <div class="card-body">
-      <p class="card-text">Description:{{ logement.description }}</p>
-      <p class="card-text">
-        Adresse: {{ logement.adresse.num }} {{ logement.adresse.rue }},{{
-          logement.adresse.cp
-        }}
-        {{ logement.adresse.ville }}, {{ logement.adresse.pays }}
+  <div class="card-body">
+    <p>
+      <u><b>Description:</b></u> {{ logement.description }}
+    </p>
+    <p>
+      <i class="fa fa-map-marker" aria-hidden="true"></i>
+      <u><b>Adresse:</b></u> {{ logement.adresse.num }}
+      {{ logement.adresse.rue }},{{ logement.adresse.cp
+      }}{{ logement.adresse.ville }}, {{ logement.adresse.pays }}
+    </p>
+    <div class="row">
+      <p class="col-6">
+        <i class="fa fa-male" aria-hidden="true"></i>
+        <u><b>Nombre d'invité max:</b></u> {{ logement.nb_invites }}
       </p>
-      <p class="card-text">nombre d'invité max: {{ logement.nb_invites }}</p>
-      <p class="card-text">Nombre de chambres: {{ logement.nb_chambres }}</p>
-      <p class="card-text">
-        Nombre de salle de bain: {{ logement.nb_salledeBain }}
+      <p class="col-6">
+        <u><b>Nombre de chambres:</b></u> {{ logement.nb_chambres }}
       </p>
-      <p class="card-text">Nombre de lits: {{ logement.nb_lits }}</p>
-      <p class="card-text">Adresse: {{ logement.adresse.pays }}</p>
-      <p class="card-text">
-        Prix par nuit: {{ logement.prix | currency : "TN" }}
+    </div>
+    <div class="row">
+      <p class="col-6">
+        <i class="fa fa-bath" aria-hidden="true"></i>
+        <u><b> Nombre de salle de bain:</b></u> {{ logement.nb_salledeBain }}
       </p>
-      <p class="card-text">Options:</p>
-      <ul>
-        <li *ngFor="let option of logement.options">
-            <span *ngIf="option.icon"
+      <p class="col-6">
+        <i class="fa fa-bed" aria-hidden="true"></i>
+        <u><b>Nombre de lits:</b></u> {{ logement.nb_lits }}
+      </p>
+    </div>
+
+    <p>
+      <i class="fa fa-money" aria-hidden="true"></i>
+      <u><b> Prix par nuit:</b></u> {{ logement.prix | currency : "TN" }}
+    </p>
+    <div class="card">
+      <div class="card-header">Caractéristiques:</div>
+      <div class="card-body">
+        <span *ngFor="let option of logement.options">
+          <span *ngIf="option.icon" class="me-2"
             ><img
               [src]="option.icon"
               alt="user"
               width="45"
-              class="rounded"
-          /></span>{{ option.lib }}
-        </li>
-      </ul>
-      <p class="card-text">Critères:</p>
-      <ul>
-        <li *ngFor="let critere of logement.criteres">
-           {{ critere.lib }}
-        </li>
-      </ul>
-      <p class="card-text">Installations:</p>
-      <ul>
-        <li *ngFor="let installation of logement.installations">
-            <span *ngIf="installation.icon"
+              class="rounded" /></span
+          >{{ option.lib }}
+        </span>
+        <span *ngFor="let critere of logement.criteres">
+          {{ critere.lib }}
+        </span>
+        <span *ngFor="let installation of logement.installations">
+          <span *ngIf="installation.icon" class="me-3"
             ><img
               [src]="installation.icon"
               alt="user"
               width="45"
-              class="rounded"
-          /></span>{{ installation.lib }}
-        </li>
-      </ul>
-      <p class="card-text">Items de sécurité:</p>
-      <ul>
-        <li *ngFor="let safetyItem of logement.safetyItems">
-            <span *ngIf="safetyItem.icon"
+              class="rounded" /></span
+          >{{ installation.lib }}
+        </span>
+
+        <span *ngFor="let safetyItem of logement.safetyItems">
+          <span *ngIf="safetyItem.icon" class="me-2"
             ><img
               [src]="safetyItem.icon"
               alt="user"
               width="45"
-              class="rounded"
-          /></span>{{ safetyItem.lib }}
-        </li>
-      </ul>
-
-      <a routerLink="../../../logements">Logements</a>
+              class="rounded" /></span
+          >{{ safetyItem.lib }}
+        </span>
+      </div>
+    </div>
+    <!-- Gallery -->
+    <div class="lightbox">
+      <div class="row">
+        <div class="col-lg-6" *ngFor="let photo of logement.photos">
+          <img
+            [src]="photo"
+            alt="{{ logement.titre }}"
+            class="w-50 shadow-1-strong rounded"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- Gallery -->
+  </div>
+  <div class="card-footer">
+    <div class="row">
+      <div class="col-6">
+       
+      </div>
+      <div class="col-6">
+        <a routerLink="../../../logements">Logements</a>
+      </div>
     </div>
   </div>
 </div>

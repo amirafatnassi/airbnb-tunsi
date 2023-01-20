@@ -1,4 +1,3 @@
-const { populate } = require("../models/logement");
 const logements = require("../models/logement");
 
 exports.getLogements = async (req, res) => {
@@ -12,7 +11,12 @@ exports.getLogements = async (req, res) => {
 
 exports.getLogement = async (req, res) => {
   try {
-    const logement = await logements.findById(req.params.id).populate('options').populate('criteres').populate('installations').populate('safetyItems');
+    const logement = await logements
+      .findById(req.params.id)
+      .populate("options")
+      .populate("criteres")
+      .populate("installations")
+      .populate("safetyItems");
     if (logement) {
       res.status(200).send(logement);
     } else {
@@ -24,10 +28,24 @@ exports.getLogement = async (req, res) => {
 };
 
 exports.addLogement = async (req, res) => {
-  try { console.log(req.body);
- await logements.create(req.body);
+  try {
+    console.log(req.files);
+    req.body.adresse = JSON.parse(req.body.adresse);
+    req.body.installations = req.body.installations.split(",");
+    req.body.criteres = req.body.criteres.split(",");
+    req.body.options = req.body.options.split(",");
+    req.body.safetyItems = req.body.safetyItems.split(",");
+
+    let photos = [];
+    req.files.map((photo) => {
+      photos.push(`http://localhost:4000/uploads/${photo.filename}`);
+    });
+    req.body.photos = photos;
+    console.log(req.body);
+    await logements.create(req.body);
     res.status(200).send({ message: "created successfully !" });
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: error.message || "erreur serveur" });
   }
 };

@@ -7,6 +7,8 @@ const {
   updateLogement,
   deleteLogement,
 } = require("../controllers/logementController");
+const upload = require("../Middlewares/upload");
+
 const router = express.Router();
 
 router.get(
@@ -21,7 +23,7 @@ router.get(
 );
 router.post(
   "/add",
-  [passport.authenticate("bearer", { session: false })],
+  [passport.authenticate("bearer", { session: false }), upload.array("photos",10)],
   addLogement
 );
 router.put(

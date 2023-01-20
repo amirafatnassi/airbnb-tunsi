@@ -34,8 +34,51 @@
             </td>
             <td class="fs-4">{{ log.adresse.ville }} {{ log.adresse.pays }}</td>
             <td class="fs-4">{{ log.description }}</td>
-            <td class="fs-4">{{ log.prix }}</td>
-            <td class="fs-4">{{ log.rating }}</td>
+            <td class="fs-4">{{ log.prix | currency:'DN'}}</td>
+            <td class="fs-4">
+                <div *ngIf="log.rating < 1">
+                  <span class="fa fa-star-o"></span
+                  ><span class="fa fa-star-o"></span
+                  ><span class="fa fa-star-o"></span
+                  ><span class="fa fa-star-o"></span
+                  ><span class="fa fa-star-o"></span>
+                </div>
+                <div *ngIf="log.rating >= 1 && log.rating < 2">
+                  <span class="fa fa-star"></span
+                  ><span class="fa fa-star-o"></span
+                  ><span class="fa fa-star-o"></span
+                  ><span class="fa fa-star-o"></span
+                  ><span class="fa fa-star-o"></span>
+                </div>
+                <div *ngIf="log.rating >= 2 && log.rating < 3">
+                  <span class="fa fa-star"></span
+                  ><span class="fa fa-star"></span
+                  ><span class="fa fa-star-o"></span
+                  ><span class="fa fa-star-o"></span
+                  ><span class="fa fa-star-o"></span>
+                </div>
+                <div *ngIf="log.rating >= 3 && log.rating < 4">
+                  <span class="fa fa-star"></span
+                  ><span class="fa fa-star"></span
+                  ><span class="fa fa-star"></span
+                  ><span class="fa fa-star-o"></span
+                  ><span class="fa fa-star-o"></span>
+                </div>
+                <div *ngIf="log.rating >= 4 && log.rating < 5">
+                  <span class="fa fa-star"></span
+                  ><span class="fa fa-star"></span
+                  ><span class="fa fa-star"></span
+                  ><span class="fa fa-star"></span
+                  ><span class="fa fa-star-o"></span>
+                </div>
+                <div *ngIf="log.rating == 5">
+                  <span class="fa fa-star"></span
+                  ><span class="fa fa-star"></span
+                  ><span class="fa fa-star"></span
+                  ><span class="fa fa-star"></span
+                  ><span class="fa fa-star"></span>
+                </div>
+            </td>
             <td>
               <button
                 class="btn rounded-circle btn-success"
