@@ -26,6 +26,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "@popperjs/core": "^2.11.5",
+    "@syncfusion/ej2-angular-calendars": "^20.4.44",
     "angular-datatables": "^15.0.0",
     "angular-feather": "^6.3.0",
     "angular-notifier": "^11.0.0",
@@ -40,6 +41,7 @@
     "jwt-decode": "^3.1.2",
     "ng-apexcharts": "^1.7.1",
     "ng2-charts": "^3.0.11",
+    "ngx-bootstrap": "^10.2.0",
     "ngx-file-drop": "^14.0.2",
     "ngx-perfect-scrollbar": "^10.1.1",
     "ngx-toastr": "^16.0.2",
@@ -48,7 +50,8 @@
     "sass": "^1.52.3",
     "sweetalert2": "^11.6.16",
     "tslib": "1.10.0",
-    "zone.js": "^0.11.6"
+    "zone.js": "^0.11.6",
+    "@syncfusion/ej2-material-theme": "~20.4.44"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.0.4",

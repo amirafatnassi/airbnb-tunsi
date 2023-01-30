@@ -1,0 +1,77 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="w-50">
+    <div class="card" style="width: 40rem">
+      <div class="card" *ngIf="logement">
+        <div class="card-header">
+          <h5>{{ logement.titre }}</h5>
+          <div class="card-body">
+            <p>
+              {{ logement.description }}
+            </p>
+            <p>
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <u><b>Adresse:</b></u> {{ logement.adresse.num }}
+              {{ logement.adresse.rue }},{{ logement.adresse.cp
+              }}{{ logement.adresse.ville }}, {{ logement.adresse.pays }}
+            </p>
+            <div class="row">
+              <p class="col-6">
+                <i class="fa fa-male" aria-hidden="true"></i>
+                <u><b>Nombre d'invité max:</b></u> {{ logement.nb_invites }}
+              </p>
+              <p class="col-6">
+                <u><b>Nombre de chambres:</b></u> {{ logement.nb_chambres }}
+              </p>
+            </div>
+            <div class="row">
+              <p class="col-6">
+                <i class="fa fa-bath" aria-hidden="true"></i>
+                <u><b> Nombre de salle de bain:</b></u>
+                {{ logement.nb_salledeBain }}
+              </p>
+              <p class="col-6">
+                <i class="fa fa-bed" aria-hidden="true"></i>
+                <u><b>Nombre de lits:</b></u> {{ logement.nb_lits }}
+              </p>
+            </div>
+
+            <p>
+              <i class="fa fa-money" aria-hidden="true"></i>
+              <u><b> Prix par nuit:</b></u>
+              {{ logement.prix | currency : "TN" }}
+            </p>
+          </div>
+        </div>
+        <form
+          [formGroup]="reservationForm"
+          (ngSubmit)="onSubmit()"
+          *ngIf="reservationForm"
+        >
+          <div class="card-body">
+            <input
+              type="text"
+              placeholder="Daterangepicker"
+              class="form-control"
+              bsDaterangepicker
+              [(ngModel)]="bsRangeValue"
+              [bsConfig]="{ isAnimated: true }"
+              [bsConfig]="datePickerConfig"
+              formControlName="date_range"
+              (onchange)="ngOnChanges()"
+            />
+            <label for="nb_invites">Nombre d'invités:</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="nb_invites"
+            />
+          </div>
+          <div class="card-footer">
+            <label for="">{{total}}</label>
+            <button class="btn btn-primary" type="submit">Réserver</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

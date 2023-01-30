@@ -1,19 +1,19 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { CritereService } from "../../services/critere/critere.service";
 import { OptionService } from "../../services/option/option.service";
 import { SafetyItemService } from "../../services/safetyItem/safety-item.service";
 import { InstallationService } from "../../services/installation/installation.service";
 import { LogementService } from "../../services/logement/logement.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-edit-logement",
   templateUrl: "./edit-logement.component.html",
   styleUrls: ["./edit-logement.component.scss"],
 })
-export class EditLogementComponent {
-  
+export class EditLogementComponent implements OnInit {
   logement: any;
   logementId: any;
   logementFG!: FormGroup;
@@ -26,6 +26,7 @@ export class EditLogementComponent {
   option_step = false;
   safetyItem_step = false;
   prix_step = false;
+  photos_step = false;
 
   liste_installations: any[] = [];
   selectedInstallations: any[] = [];
@@ -39,6 +40,9 @@ export class EditLogementComponent {
   liste_safetyItems: any[] = [];
   selectedSafetyItems: any[] = [];
 
+  liste_photos: any[] = [];
+
+  selectedFiles?: FileList;
   step = 1;
 
   constructor(
@@ -47,12 +51,19 @@ export class EditLogementComponent {
     private critereService: CritereService,
     private optionService: OptionService,
     private safetyItemService: SafetyItemService,
-    private route: ActivatedRoute
+    private router: ActivatedRoute,
+    private route: Router,
+
   ) {}
 
   ngOnInit() {
-    this.logementId = this.route.snapshot.params["id"];
+    this.logementId = this.router.snapshot.params["id"];
+
     this.monLogement();
+    this.listeInstallations();
+    this.listeCriteres();
+    this.listeOptions();
+    this.listeSafetyItems();
     this.logementFG = new FormGroup({
       titre: new FormControl("", Validators.required),
       description: new FormControl("", Validators.required),
@@ -73,25 +84,18 @@ export class EditLogementComponent {
       safetyItems: new FormControl(this.selectedSafetyItems),
       prix: new FormControl("", Validators.required),
     });
-
-    this.listeInstallations();
-    this.listeCriteres();
-    this.listeOptions();
-    this.listeSafetyItems();
   }
 
   monLogement() {
-    this.logementService
-      .getLogement(this.logementId)
-      .subscribe((res: any) => {
-        this.logement = res;
-        this.selectedInstallations=this.logement.installations;
-        this.selectedOptions=this.logement.options;
-        this.selectedCriteres=this.logement.criteres;
-        this.selectedSafetyItems=this.logement.safetyItems;
-        this.logementFG.patchValue(res);console.log(res);
-        
-      });
+    this.logementService.getLogement(this.logementId).subscribe((res: any) => {
+      this.logement = res;
+      this.selectedInstallations = this.logement.installations;
+      this.selectedCriteres = this.logement.criteres;
+      this.selectedOptions = this.logement.options;
+      this.selectedSafetyItems = this.logement.safetyItems;
+      this.liste_photos = this.logement.photos;
+      this.logementFG.patchValue(this.logement);
+    });
   }
   get adresse() {
     return this.logementFG.get("adresse") as FormGroup;
@@ -179,20 +183,45 @@ export class EditLogementComponent {
     if (this.step == 7) {
       this.safetyItem_step = false;
     }
-  }
-  submit() {
-    console.log(this.logementFG.value);
     if (this.step == 8) {
-      this.prix_step = true;
-      if (this.logementFG.get("prix")?.invalid) {
-        return;
-      }
+      this.prix_step = false;
     }
+    if (this.step == 9) {
+      this.photos_step = false;
+    }
+  }
+  update() {
+    let formData = new FormData();
+    Object.keys(this.logementFG.value).forEach((fieldName) => {
+      if (fieldName == "adresse") {
+        let adress = {
+          rue: this.adresse.controls.rue.value,
+          cp: this.adresse.controls.cp.value,
+          num: this.adresse.controls.num.value,
+          ville: this.adresse.controls.ville.value,
+          pays: this.adresse.controls.pays.value,
+        };
+        formData.append(fieldName, JSON.stringify(adress));
+      } else {
+        formData.append(fieldName, this.logementFG.value[fieldName]);
+      }
+    });
+
+      for (let i = 0; i < this.selectedFiles!.length; i++) {
+        formData.append(
+          "photos",
+          this.selectedFiles![i],
+          this.selectedFiles![i].name
+        );
+      }
+   
     this.logementService
-      .createLogement(this.logementFG.value)
+      .updateLogement(this.logementId, formData)
       .subscribe((res: any) => {
         console.log(res);
       });
+    this.route.navigate(["/logements"]);
+
   }
   listeInstallations() {
     this.installationService.getInstallations().subscribe((res: any) => {
@@ -215,6 +244,7 @@ export class EditLogementComponent {
     });
   }
   checkInstallation(event: any, value: any) {
+
     if (event.target.checked) this.selectedInstallations.push(value);
     if (!event.target.checked) {
       let index = this.selectedInstallations.indexOf(value);
@@ -249,5 +279,9 @@ export class EditLogementComponent {
         this.selectedSafetyItems.splice(index, 1);
       }
     }
+  }
+  onSelectFile(event: any) {
+    this.selectedFiles = event.target.files;
+    console.log(event.target.files);
   }
 }

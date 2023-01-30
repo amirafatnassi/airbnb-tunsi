@@ -24,12 +24,12 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree {
     const token = localStorage.getItem("token");
-
+    const role = localStorage.getItem("userRole");
     if (token !== null) {
       const expire = this.isExpiredToken(token);
       if (expire) {
         this.router.navigateByUrl("/auth/login");
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
         return false;
       } else {
         return true;
@@ -39,6 +39,7 @@ export class AuthGuard implements CanActivate {
       return false;
     }
   }
+
   isExpiredToken(token: string): boolean {
     let decoded: any = jwt_decode(token);
     return Math.floor(new Date().getTime() / 1000) >= decoded.exp;

@@ -12,7 +12,8 @@
           <li [ngClass]="step >= 5 ? 'active' : 'inactive'">Critères</li>
           <li [ngClass]="step >= 6 ? 'active' : 'inactive'">Options</li>
           <li [ngClass]="step == 7 ? 'active' : 'inactive'">Safety items</li>
-          <li [ngClass]="step == 8 ? 'active' : 'inactive'">Prxi</li>
+          <li [ngClass]="step == 8 ? 'active' : 'inactive'">Prix</li>
+          <li [ngClass]="step == 9 ? 'active' : 'inactive'">Photos</li>
         </ul>
 
         <!-- fieldsets -->
@@ -384,12 +385,12 @@
             value="Précèdant"
           />
           <input
-            (click)="next()"
-            type="next"
-            name="next"
-            class="next action-button"
-            value="Suivant"
-          />
+          (click)="next()"
+          type="button"
+          name="next"
+          class="next action-button"
+          value="Suivant"
+        />
         </fieldset>
       </div>
 
@@ -399,11 +400,14 @@
           <h2 class="fs-title">Prix</h2>
           <div class="row">
             <label for="prix">Prix / nuit:</label>
-            <input type="number" formControlName="prix" placeholder="50" />
+            <div class="align-items-center">
+              <input type="number" formControlName="prix" placeholder="50"/>
+            </div>
             <div class="text-danger" *ngIf="logementFG.controls['prix'].errors">
               Prix est obligatoire
             </div>
           </div>
+
           <input
             (click)="previous()"
             type="button"
@@ -425,22 +429,12 @@
       <div id="msform">
         <fieldset *ngIf="step == 9">
           <p class="h4">Télécharger vos meilleures photos</p>
-          <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
-
           <div class="row">
-            <h3>upload fichier svp</h3>
-            <div class="col-8">
               <label class="btn btn-default p-0">
-                <input type="file" multiple (change)="onSelectFile($event)" />
+                <input type="file" multiple (change)="onSelectFile($event)" class="form-control" />
               </label>
-            </div>
-
-            
           </div>
 
-          
-         
-          
           <input
             (click)="previous()"
             type="button"

@@ -9,6 +9,7 @@ const routes: Routes = [
     path: "",
     component: FullComponent,
     canActivate: [AuthGuard],
+    data:{role:"Admin"},
     children: [
       { path: "", redirectTo: "/dashboard", pathMatch: "full" },
       {
@@ -68,6 +69,8 @@ const routes: Routes = [
   },
   {
     path: "welcome",
+    canActivate: [AuthGuard],
+    data:{role:"Utilisateur"},
     loadChildren: () =>
       import("./welcome/welcome.module").then((m) => m.WelcomeModule),
   },

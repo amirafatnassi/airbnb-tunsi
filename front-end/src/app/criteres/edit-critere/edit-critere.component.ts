@@ -44,7 +44,6 @@ export class EditCritereComponent {
     this.critereService
       .updateCritere(this.critereId, this.critereForm.value)
       .subscribe((res: any) => {
-        console.log("critere updated !");
         this.ngOnInit();
       });
   }

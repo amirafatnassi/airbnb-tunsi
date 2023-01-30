@@ -27,18 +27,15 @@ export class EditUserComponent implements OnInit {
     this.userId = this.route.snapshot.params["id"];
     this.myUser();
   }
-
   
   myUser() {
     this.userService
       .getUser(this.userId)
       .subscribe((res: any) => {
-        this.user = res; console.log(res);
-        
+        this.user = res;
         this.userForm.patchValue(res);
       });
   }
-  
   
   update() {
     this.validForm = true;

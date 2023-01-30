@@ -44,7 +44,6 @@ export class EditInstallationComponent {
     this.installationService
       .updateInstallation(this.installationId, this.installationForm.value)
       .subscribe((res: any) => {
-        console.log("installation updated !");
         this.ngOnInit();
       });
   }

@@ -1,10 +1,10 @@
-<div class="card">
+<div class="card" *ngIf="logement">
   <h5 class="card-header">
     <legend><span class="fa fa-home"></span> {{ logement.titre }}</legend>
     <div class="d-flex">
       <div *ngFor="let i of logement.rating">
-        <span *ngIf="i==1" class="fa fa-star"></span>
-        <span *ngIf="i==0" class="fa fa-star-o"></span>
+        <span *ngIf="i == 1" class="fa fa-star"></span>
+        <span *ngIf="i == 0" class="fa fa-star-o"></span>
       </div>
     </div>
   </h5>
@@ -79,24 +79,48 @@
         </span>
       </div>
     </div>
-    <!-- Gallery -->
-    <div class="lightbox">
-      <div class="row">
-        <div class="col-lg-6" *ngFor="let photo of logement.photos">
-          <img
-            [src]="photo"
-            alt="{{ logement.titre }}"
-            class="w-50 shadow-1-strong rounded"
-          />
+
+    <div id="carouselExampleIndicators" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="carousel-item" *ngFor="let item of logement.photos;let index = index;let isFirst = first" [ngClass]="{active:isFirst}">
+          <img [src]="item" class="d-block w-100" [alt]="logement.titre">
         </div>
       </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-    <!-- Gallery -->
   </div>
   <div class="card-footer">
     <div class="row">
       <div class="col-6">
-       
+        <button
+          class="btn rounded-circle btn-success"
+          routerLink="/logements/update/{{ logement._id }}"
+        >
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button
+          class="btn rounded-circle btn-danger"
+          (click)="suppLogement(logement._id)"
+        >
+          <i class="bi bi-trash"></i>
+        </button>
       </div>
       <div class="col-6">
         <a routerLink="../../../logements">Logements</a>

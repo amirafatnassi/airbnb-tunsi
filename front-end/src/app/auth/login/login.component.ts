@@ -33,6 +33,7 @@ export class LoginComponent {
         if (res) {
           this.toastr.success(res.message, "Success!");
           localStorage.setItem("token", res.token);
+          localStorage.setItem("role", res.userRole);
           this.route.navigate(["/dashboard"]);
         }
       },

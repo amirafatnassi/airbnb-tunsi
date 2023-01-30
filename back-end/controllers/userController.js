@@ -8,7 +8,6 @@ const tokens = require("../models/token");
 exports.register = async (req, res) => {
   try {
     const result = await users.findOne({ email: req.body.email });
-    console.log(result);
     if (result) {
       res.status(400).send({ message: "email déjà existant !" });
     } else {
@@ -36,7 +35,7 @@ exports.login = async (req, res) => {
       if (checkPassword) {
         const data = { userId: result._id};
         const token = jwt.sign(data, process.env.JWTKEY, { expiresIn: "1d" });
-        res.send({ token, message: "logged in successfully" });
+        res.send({ token, message: "logged in successfully",userRole: result.role });
       } else {
         res.status(400).send({ message: "password don't match" });
       }
@@ -95,7 +94,6 @@ exports.forgetPassword = async (req, res) => {
 exports.resetPassword = async (req, res) => {
   try {
     const token = await tokens.findOne({ token: req.body.token });
-    console.log(token);
     if (token) {
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(req.body.password, salt);
@@ -109,7 +107,6 @@ exports.resetPassword = async (req, res) => {
       res.status(400).send({ message: "token invalid" });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).send({ message: error.message || "An error occured" });
   }
 };

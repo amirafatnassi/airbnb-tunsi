@@ -28,7 +28,7 @@ router.post(
 );
 router.put(
   "/update/:id",
-  passport.authenticate("bearer", { session: false }),
+  [passport.authenticate("bearer", { session: false }), upload.array("photos",10)],
   updateLogement
 );
 router.delete(

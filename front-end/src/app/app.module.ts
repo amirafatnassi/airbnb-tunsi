@@ -32,6 +32,9 @@ import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { SharedModule } from "./shared/shared.module";
 import { DataTablesModule } from "angular-datatables";
 import { AuthInterceptor } from "./interceptor/auth.interceptor";
+import { SearchPipe } from "./pipes/search.pipe";
+import { BsDatepickerConfig, BsDatepickerModule } from "ngx-bootstrap/datepicker";
+import { DatePipe } from '@angular/common';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -61,6 +64,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ToastrModule.forRoot(),
     SharedModule,
     DataTablesModule,
+    // BsDatepickerModule.forRoot(),
   ],
   providers: [
     {
@@ -74,8 +78,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi:true
+      multi: true,
     },
+    DatePipe
   ],
   bootstrap: [AppComponent],
 })

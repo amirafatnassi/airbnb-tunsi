@@ -6,6 +6,7 @@ import { SafetyItemService } from "../../services/safetyItem/safety-item.service
 import { InstallationService } from "../../services/installation/installation.service";
 import { LogementService } from "../../services/logement/logement.service";
 import { Observable } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-add-logement",
@@ -40,17 +41,15 @@ export class AddLogementComponent implements OnInit {
 
   step = 1;
   selectedFiles?: FileList;
-  currentFile?: any;
-  progress = 0;
-  message = "";
-
   fileInfos?: Observable<any>;
+
   constructor(
     private logementService: LogementService,
     private installationService: InstallationService,
     private critereService: CritereService,
     private optionService: OptionService,
-    private safetyItemService: SafetyItemService
+    private safetyItemService: SafetyItemService,
+    private route: Router,
   ) {}
 
   ngOnInit() {
@@ -72,7 +71,7 @@ export class AddLogementComponent implements OnInit {
       criteres: new FormControl(this.selectedCriteres),
       options: new FormControl(this.selectedOptions),
       safetyItems: new FormControl(this.selectedSafetyItems),
-      prix: new FormControl("", Validators.required),
+      prix: new FormControl(0, Validators.required),
     });
 
     this.listeInstallations();
@@ -143,8 +142,8 @@ export class AddLogementComponent implements OnInit {
       }
     }
     if (this.step == 9) {
-      this.prix_step = true;
-      if (this.logementFG.get("photo")?.invalid) {
+      this.photos_step = true;
+      if (this.uploadedPhotos.length==0) {
         return;
       }
     }
@@ -180,10 +179,7 @@ export class AddLogementComponent implements OnInit {
       this.photos_step = false;
     }
   }
-  submit() {
-    
-    
-    console.log(this.logementFG.value);
+  submit() {  
     if (this.step == 9) {
       this.photos_step = true;
       if (this.logementFG.get("photos")?.invalid) {
@@ -201,19 +197,18 @@ export class AddLogementComponent implements OnInit {
           pays:this.adresse.controls.pays.value
         }
         formData.append(fieldName, JSON.stringify(adress));
-      } else {
-        
+      } else {  
         formData.append(fieldName, this.logementFG.value[fieldName]);
       }
     });
-    
     for (let i = 0; i < this.selectedFiles!.length; i++) {
       formData.append('photos',this.selectedFiles![i],this.selectedFiles![i].name)
     }
-
     this.logementService.createLogement(formData).subscribe((res: any) => {
       console.log(res);
     });
+    this.route.navigate(["/logements"]);
+
   }
   listeInstallations() {
     this.installationService.getInstallations().subscribe((res: any) => {
@@ -273,9 +268,6 @@ export class AddLogementComponent implements OnInit {
   }
 
   onSelectFile(event: any) {
-    
-    this.selectedFiles = event.target.files;
-    console.log( event.target.files);
-    
+    this.selectedFiles = event.target.files;   
   }
 }

@@ -68,7 +68,6 @@ export class InstallationsComponent {
         this.installationService
           .deleteInstallation(id)
           .subscribe((res: any) => {
-            console.log("installation supprimé !");
             this.ngOnInit();
           });
       }

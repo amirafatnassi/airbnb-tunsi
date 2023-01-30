@@ -22,17 +22,15 @@ export class ForgetPasswordComponent {
 
   login() {
     this.validForm = true;
-    console.log(this.forgetForm.value);
     if (this.forgetForm.invalid) {
       return;
     }
     this.userService.forgetPassword(this.forgetForm.value).subscribe((res: any) => {
-      console.log(res);
       if(res){
         this.toastr.success(res.message, 'Success!');
         this.route.navigate(['/dashboard']);
       }
-    }, (error)=> {console.log(error);
+    }, (error)=> {
       this.toastr.error(error.error.message, 'Error!');
     });
   }

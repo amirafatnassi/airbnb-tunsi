@@ -1,0 +1,128 @@
+<div class="card" *ngIf="logement">
+  <h5 class="card-header">
+    <legend><span class="fa fa-home"></span> {{ logement.titre }}</legend>
+    <div class="d-flex">
+      <div *ngFor="let i of logement.rating">
+        <span *ngIf="i == 1" class="fa fa-star"></span>
+        <span *ngIf="i == 0" class="fa fa-star-o"></span>
+      </div>
+    </div>
+  </h5>
+
+  <div class="card-body">
+    <p>
+      <u><b>Description:</b></u> {{ logement.description }}
+    </p>
+    <p>
+      <i class="fa fa-map-marker" aria-hidden="true"></i>
+      <u><b>Adresse:</b></u> {{ logement.adresse.num }}
+      {{ logement.adresse.rue }},{{ logement.adresse.cp
+      }}{{ logement.adresse.ville }}, {{ logement.adresse.pays }}
+    </p>
+    <div class="row">
+      <p class="col-6">
+        <i class="fa fa-male" aria-hidden="true"></i>
+        <u><b>Nombre d'invité max:</b></u> {{ logement.nb_invites }}
+      </p>
+      <p class="col-6">
+        <u><b>Nombre de chambres:</b></u> {{ logement.nb_chambres }}
+      </p>
+    </div>
+    <div class="row">
+      <p class="col-6">
+        <i class="fa fa-bath" aria-hidden="true"></i>
+        <u><b> Nombre de salle de bain:</b></u> {{ logement.nb_salledeBain }}
+      </p>
+      <p class="col-6">
+        <i class="fa fa-bed" aria-hidden="true"></i>
+        <u><b>Nombre de lits:</b></u> {{ logement.nb_lits }}
+      </p>
+    </div>
+
+    <p>
+      <i class="fa fa-money" aria-hidden="true"></i>
+      <u><b> Prix par nuit:</b></u> {{ logement.prix | currency : "TN" }}
+    </p>
+    <div class="card">
+      <div class="card-header">Caractéristiques:</div>
+      <div class="card-body">
+        <span *ngFor="let option of logement.options">
+          <span *ngIf="option.icon" class="me-2"
+            ><img
+              [src]="option.icon"
+              alt="user"
+              width="45"
+              class="rounded" /></span
+          >{{ option.lib }}
+        </span>
+        <span *ngFor="let critere of logement.criteres">
+          {{ critere.lib }}
+        </span>
+        <span *ngFor="let installation of logement.installations">
+          <span *ngIf="installation.icon" class="me-3"
+            ><img
+              [src]="installation.icon"
+              alt="user"
+              width="45"
+              class="rounded" /></span
+          >{{ installation.lib }}
+        </span>
+
+        <span *ngFor="let safetyItem of logement.safetyItems">
+          <span *ngIf="safetyItem.icon" class="me-2"
+            ><img
+              [src]="safetyItem.icon"
+              alt="user"
+              width="45"
+              class="rounded" /></span
+          >{{ safetyItem.lib }}
+        </span>
+      </div>
+    </div>
+
+    <div id="carouselExampleIndicators" class="carousel slide">
+      <div class="carousel-inner">
+        <div
+          class="carousel-item"
+          *ngFor="
+            let item of logement.photos;
+            let index = index;
+            let isFirst = first
+          "
+          [ngClass]="{ active: isFirst }"
+        >
+          <img [src]="item" class="d-block w-100" [alt]="logement.titre" />
+        </div>
+      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-6">
+          <a routerLink="/welcome/reserver/{{ logement._id }}" class="btn btn-primary">Réserver</a>
+        </div>
+        <div class="col-6">
+          <a routerLink="../../../welcome"> <span class="fa fa-home"></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
