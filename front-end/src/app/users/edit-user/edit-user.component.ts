@@ -46,7 +46,6 @@ export class EditUserComponent implements OnInit {
     this.userService
       .updateUser(this.userId, this.userForm.value)
       .subscribe((res: any) => {
-        console.log("user mis à jour !");
         this.ngOnInit();
       });
   }

@@ -25,8 +25,6 @@ export class AddInstallationComponent {
     }
     this.installationService
       .createInstallation(this.installationForm.value)
-      .subscribe((res: any) => {
-        console.log(res);
-      });
+      .subscribe((res: any) => {});
   }
 }

@@ -47,7 +47,6 @@ export class ShowLogementComponent {
           .deleteLogement(id)
           .subscribe((res: any) => {
             this.ngOnInit();
-            console.log("Logement supprimé !");
           });
       }
     });

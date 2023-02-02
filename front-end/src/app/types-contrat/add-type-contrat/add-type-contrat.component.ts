@@ -25,8 +25,6 @@ export class AddTypeContratComponent {
     }
     this.typeContratService
       .createTypeContrat(this.typeContratForm.value)
-      .subscribe((res: any) => {
-        console.log(res);
-      });
+      .subscribe((res: any) => {});
   }
 }

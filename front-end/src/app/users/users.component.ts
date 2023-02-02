@@ -63,7 +63,6 @@ export class UsersComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.userService.deleteUser(id).subscribe((res: any) => {
-          console.log("utilisateur supprimé !");
           this.ngOnInit();
         });
       }

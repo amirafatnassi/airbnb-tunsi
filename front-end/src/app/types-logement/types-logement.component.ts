@@ -63,7 +63,6 @@ export class TypesLogementComponent {
         this.typeLogementService
           .deleteTypeLogement(id)
           .subscribe((res: any) => {
-            console.log("type de logement supprimé !");
             this.ngOnInit();
           });
       }

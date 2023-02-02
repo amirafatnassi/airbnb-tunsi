@@ -69,7 +69,6 @@ export class ReservationComponent implements OnInit {
     const decoded: any = jwtDecode(token);
     this.userService.getUser(decoded.userId).subscribe((res: any) => {
       this.currentUserId = res._id;
-      console.log(res);
     });
   }
 
@@ -82,28 +81,21 @@ export class ReservationComponent implements OnInit {
     this.reservationForm.value.date_debut = this.bsRangeValue[0].toISOString();
     this.reservationForm.value.date_fin = this.bsRangeValue[1].toISOString();
     this.reservationForm.value.guest = this.currentUserId;
-    console.log(this.reservationForm.value);
     
     this.reservationService
       .createReservation(this.reservationForm.value)
-      .subscribe((res: any) => {
-        console.log(res);
-      });
+      .subscribe((res: any) => {});
   }
 
  
-  ngOnChanges(){
-    console.log('test');
-    
+  ngOnChanges(){    
     this.validForm = true;
     if (this.reservationForm.invalid) {
       return;
     }
     delete this.reservationForm.value.date_range;
     const startDate = new Date(this.bsRangeValue[0]);
-    const endDate = new Date(this.bsRangeValue[1]);
-    console.log((endDate.getTime()-startDate.getTime() ) /(3600000*24));
-    
+    const endDate = new Date(this.bsRangeValue[1]);    
     this.reservationForm.value.date_debut =
     this.reservationForm.value.date_fin = this.bsRangeValue[1].toISOString();
     this.total = (endDate.getTime()-startDate.getTime() ) /(3600000*24);

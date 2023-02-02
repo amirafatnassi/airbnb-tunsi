@@ -61,7 +61,6 @@ export class SafetyItemsComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.safetyItemService.deleteSafetyItem(id).subscribe((res: any) => {
-          console.log("safety item supprimé !");
           this.ngOnInit();
         });
       }

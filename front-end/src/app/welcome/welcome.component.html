@@ -91,7 +91,7 @@
           <div
             class="col-lg-4 col-md-6"
             *ngFor="
-              let log of logements | searchpipe : searchText;
+              let log of logs | searchpipe : searchText;
               let i = index
             "
           >
@@ -208,6 +208,13 @@
             </div>
           </div>
         </div>
+        <button
+          class="btn btn-primary"
+          (click)="more()"
+          [hidden]="hidden"
+        >
+         charger plus ...
+        </button>
       </div>
     </section>
 

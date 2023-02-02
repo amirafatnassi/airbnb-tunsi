@@ -204,9 +204,7 @@ export class AddLogementComponent implements OnInit {
     for (let i = 0; i < this.selectedFiles!.length; i++) {
       formData.append('photos',this.selectedFiles![i],this.selectedFiles![i].name)
     }
-    this.logementService.createLogement(formData).subscribe((res: any) => {
-      console.log(res);
-    });
+    this.logementService.createLogement(formData).subscribe((res: any) => {});
     this.route.navigate(["/logements"]);
 
   }

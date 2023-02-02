@@ -24,8 +24,6 @@ export class AddOptionComponent {
     }
     this.optionService
       .createOption(this.optionForm.value)
-      .subscribe((res: any) => {
-        console.log(res);
-      });
+      .subscribe((res: any) => {});
   }
 }

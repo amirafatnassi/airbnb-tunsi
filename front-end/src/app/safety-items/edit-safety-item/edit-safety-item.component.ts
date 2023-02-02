@@ -44,7 +44,6 @@ export class EditSafetyItemComponent {
     this.safetyItemService
       .updateSafetyItem(this.safetyItemId, this.safetyItemForm.value)
       .subscribe((res: any) => {
-        console.log("safety item mis à !");
         this.ngOnInit();
       });
   }

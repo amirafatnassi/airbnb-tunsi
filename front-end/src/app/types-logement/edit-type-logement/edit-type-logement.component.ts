@@ -44,7 +44,6 @@ export class EditTypeLogementComponent {
     this.typeLogementService
       .updateTypeLogement(this.typeLogementId, this.typeLogementForm.value)
       .subscribe((res: any) => {
-        console.log("Type de logement modifié !");
         this.ngOnInit();
       });
   }

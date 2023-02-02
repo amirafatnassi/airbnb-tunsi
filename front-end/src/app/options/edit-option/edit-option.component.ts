@@ -44,7 +44,6 @@ export class EditOptionComponent {
     this.optionService
       .updateOption(this.optionId, this.optionForm.value)
       .subscribe((res: any) => {
-        console.log("option updated !");
         this.ngOnInit();
       });
   }

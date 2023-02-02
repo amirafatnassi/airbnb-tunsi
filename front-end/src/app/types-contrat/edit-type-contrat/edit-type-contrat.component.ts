@@ -44,7 +44,6 @@ export class EditTypeContratComponent {
     this.typeContratService
       .updateTypeContrat(this.typeContratId, this.typeContratForm.value)
       .subscribe((res: any) => {
-        console.log("Type de contrat modifié !");
         this.ngOnInit();
       });
   }

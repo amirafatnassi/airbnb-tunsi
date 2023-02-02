@@ -25,8 +25,6 @@ export class AddSafetyItemComponent {
     }
     this.safetyItemService
       .createSafetyItem(this.safetyItemForm.value)
-      .subscribe((res: any) => {
-        console.log(res);
-      });
+      .subscribe((res: any) => {});
   }
 }

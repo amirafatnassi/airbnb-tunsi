@@ -61,7 +61,6 @@ export class TypesContratComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.typeContratService.deleteTypeContrat(id).subscribe((res: any) => {
-          console.log("Type de contrat supprimé !");
           this.ngOnInit();
         });
       }

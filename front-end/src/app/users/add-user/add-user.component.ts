@@ -27,12 +27,9 @@ export class AddUserComponent implements OnInit {
 
   onSubmitFormGroupe() {
     this.validForm = true;
-    console.log(this.userForm.value);
     if (this.userForm.invalid) {
       return;
     }
-    this.userService.createUser(this.userForm.value).subscribe((res: any) => {
-      console.log(res);
-    });
+    this.userService.createUser(this.userForm.value).subscribe((res: any) => {});
   }
 }

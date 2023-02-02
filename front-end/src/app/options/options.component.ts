@@ -13,7 +13,7 @@ export class OptionsComponent {
   constructor(private optionService: OptionService) {}
 
   ngOnInit(): void {
-    this.optionsList();console.log('inint');
+    this.optionsList();
     this.dtOptions = {  language: {
       processing: "Traitement en cours...",
       search: "Rechercher&nbsp;:",
@@ -44,13 +44,13 @@ export class OptionsComponent {
   }
 
   optionsList(){
-    this.optionService.getOptions().subscribe((res:any)=>{ console.log('rrrr');this.options=res ;
+    this.optionService.getOptions().subscribe((res:any)=>{
+      this.options=res ;
     })
   }
 
   suppOption(id:number){
     this.optionService.deleteOption(id).subscribe((res:any)=>{
-      console.log('option deleted !');
       this.ngOnInit();
     });
   }

@@ -59,7 +59,6 @@ export class CriteresComponent {
     }).then((result) => {
       if (result.isConfirmed) {      
         this.critereService.deleteCritere(id).subscribe((res:any)=>{
-          console.log('critère supprimé !');
           this.ngOnInit();
         });
       }

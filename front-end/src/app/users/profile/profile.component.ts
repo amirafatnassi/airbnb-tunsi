@@ -19,7 +19,6 @@ export class ProfileComponent {
   myUser() {
     this.userService.myProfile().subscribe((res: any) => {
       this.user = res;
-      console.log(res);
     });
   }
 }

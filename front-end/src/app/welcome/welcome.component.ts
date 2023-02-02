@@ -12,7 +12,10 @@ export class WelcomeComponent implements OnInit {
   logements: any[] = [];
   dtOptions: DataTables.Settings = {};
   searchText: string = "";
- 
+  logs: any[] = [];
+  x = 3;
+  hidden = false;
+
   constructor(private logementService: LogementService) {}
 
   ngOnInit(): void {
@@ -54,6 +57,7 @@ export class WelcomeComponent implements OnInit {
   logementsList() {
     this.logementService.getLogements().subscribe((res: any) => {
       this.logements = res;
+      this.logs = this.logements.slice(0, this.x);
     });
   }
 
@@ -69,9 +73,21 @@ export class WelcomeComponent implements OnInit {
       if (result.isConfirmed) {
         this.logementService.deleteLogement(id).subscribe((res: any) => {
           this.ngOnInit();
-          console.log("Logement supprimé !");
         });
       }
     });
+  }
+
+  more() {   
+    if (this.logs.length < this.logements.length) {
+      if (this.logements.length - this.logs.length > 3) {
+        this.x = this.x + 3;
+      }
+      else {
+        this.x = this.x + (this.logements.length - this.logs.length);
+      }
+      this.logementsList();
+    } else 
+      this.hidden = true;
   }
 }

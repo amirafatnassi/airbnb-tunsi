@@ -67,9 +67,7 @@ export class LogementsComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.logementService.deleteLogement(id).subscribe((res: any) => {
-          this.ngOnInit();
-          console.log("Logement supprimé !");
-        });
+          this.ngOnInit();});
       }
     });
   }

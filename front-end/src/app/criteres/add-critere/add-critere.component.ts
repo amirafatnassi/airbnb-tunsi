@@ -25,8 +25,6 @@ export class AddCritereComponent {
     }
     this.critereService
       .createCritere(this.critereForm.value)
-      .subscribe((res: any) => {
-        console.log(res);
-      });
+      .subscribe((res: any) => {});
   }
 }

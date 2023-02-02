@@ -217,9 +217,7 @@ export class EditLogementComponent implements OnInit {
    
     this.logementService
       .updateLogement(this.logementId, formData)
-      .subscribe((res: any) => {
-        console.log(res);
-      });
+      .subscribe((res: any) => {});
     this.route.navigate(["/logements"]);
 
   }
@@ -282,6 +280,5 @@ export class EditLogementComponent implements OnInit {
   }
   onSelectFile(event: any) {
     this.selectedFiles = event.target.files;
-    console.log(event.target.files);
   }
 }

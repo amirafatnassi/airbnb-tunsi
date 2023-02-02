@@ -25,8 +25,6 @@ export class AddTypeLogementComponent {
     }
     this.typeLogementService
       .createTypeLogement(this.typeLogementForm.value)
-      .subscribe((res: any) => {
-        console.log(res);
-      });
+      .subscribe((res: any) => {});
   }
 }
