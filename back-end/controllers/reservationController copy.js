@@ -56,14 +56,14 @@ exports.addReservation = async (req, res) => {
       path.resolve(`./qrcodes/${reservation._id}.png`),
       JSON.stringify(reserved)
     );
-    let img_b64="";
+    const img_b64="";
     const file = fs.readFileSync(path.resolve(`qrcodes/${reservation._id}.png`))
-    QRCode.toDataURL(file).then((url)=>{
-      img_b64 = url
-      console.log(url)
-    })
-    .catch((error)=> console.log(error))
-    
+    let reader = new FileReader()
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          const base64String = (reader.result).replace("data:", "").replace(/^.+,/, "");
+          img_b64="data:image/jpeg;base64," + base64String.toString();
+        };
     const pdf_file = fs.readFileSync("Views/reservation.html", "utf-8");
     const render = ejs.render(pdf_file, {
       reserved: reserved,

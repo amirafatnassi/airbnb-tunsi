@@ -28,6 +28,8 @@ export class ReservationComponent implements OnInit {
   datePickerConfig: Partial<BsDatepickerConfig>;
 
   total = 0;
+  nb_jours = 0;
+  nb_personnes = 0;
 
   constructor(
     private reservationService: ReservationService,
@@ -70,6 +72,20 @@ export class ReservationComponent implements OnInit {
     this.userService.getUser(decoded.userId).subscribe((res: any) => {
       this.currentUserId = res._id;
     });
+
+    this.reservationForm.controls.date_range.valueChanges.subscribe((res) => {
+      const startDate = new Date(res[0]);
+      const endDate = new Date(res[1]);
+      this.reservationForm.value.date_debut = res[0].toISOString();
+      this.reservationForm.value.date_fin = res[1].toISOString();
+      this.nb_jours =
+        (endDate.getTime() - startDate.getTime()) / (3600000 * 24);
+      this.total = this.nb_jours * this.nb_personnes * this.logement.prix;
+    });
+    this.reservationForm.controls.nb_invites.valueChanges.subscribe((res) => {
+      this.nb_personnes = res;
+      this.total = this.nb_jours * this.nb_personnes * this.logement.prix;
+    });
   }
 
   onSubmit() {
@@ -81,23 +97,9 @@ export class ReservationComponent implements OnInit {
     this.reservationForm.value.date_debut = this.bsRangeValue[0].toISOString();
     this.reservationForm.value.date_fin = this.bsRangeValue[1].toISOString();
     this.reservationForm.value.guest = this.currentUserId;
-    
+    this.reservationForm.value.total = this.total;
     this.reservationService
       .createReservation(this.reservationForm.value)
       .subscribe((res: any) => {});
   }
-
- 
-  ngOnChanges(){    
-    this.validForm = true;
-    if (this.reservationForm.invalid) {
-      return;
-    }
-    delete this.reservationForm.value.date_range;
-    const startDate = new Date(this.bsRangeValue[0]);
-    const endDate = new Date(this.bsRangeValue[1]);    
-    this.reservationForm.value.date_debut =
-    this.reservationForm.value.date_fin = this.bsRangeValue[1].toISOString();
-    this.total = (endDate.getTime()-startDate.getTime() ) /(3600000*24);
-}
 }

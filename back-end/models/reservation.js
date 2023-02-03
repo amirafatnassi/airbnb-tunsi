@@ -8,6 +8,7 @@ const ReservationSchema = new Schema(
     date_debut: Date,
     date_fin: Date,
     nb_invites: Number,
+    total: Number,
     rating: { type: Number, default: 0 },
     commentaire: String,
   },

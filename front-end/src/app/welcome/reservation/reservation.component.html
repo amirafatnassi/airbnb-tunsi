@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center align-items-center vh-100">
+<div class="d-flex justify-content-center align-items-center min-vh-100">
   <div class="w-50">
     <div class="card" style="width: 40rem">
       <div class="card" *ngIf="logement">
@@ -38,7 +38,7 @@
             <p>
               <i class="fa fa-money" aria-hidden="true"></i>
               <u><b> Prix par nuit:</b></u>
-              {{ logement.prix | currency : "TN" }}
+              {{ logement.prix | currency : "TND" }}
             </p>
           </div>
         </div>
@@ -57,7 +57,6 @@
               [bsConfig]="{ isAnimated: true }"
               [bsConfig]="datePickerConfig"
               formControlName="date_range"
-              (onchange)="ngOnChanges()"
             />
             <label for="nb_invites">Nombre d'invités:</label>
             <input
@@ -67,8 +66,17 @@
             />
           </div>
           <div class="card-footer">
-            <label for="">{{total}}</label>
-            <button class="btn btn-primary" type="submit">Réserver</button>
+            <div class="row">
+              <div class="col">
+                <button class="btn btn-primary float-left" type="submit">
+                  Réserver
+                </button>
+              </div>
+              <div class="col float-right">
+                <h4 class="font-weight-bold">Total:</h4>
+                <h4>{{total | currency : "TND" }}</h4>
+              </div>
+            </div>
           </div>
         </form>
       </div>

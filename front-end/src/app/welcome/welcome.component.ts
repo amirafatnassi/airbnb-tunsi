@@ -85,7 +85,11 @@ export class WelcomeComponent implements OnInit {
       }
       else {
         this.x = this.x + (this.logements.length - this.logs.length);
+        if(this.logements.length==this.x){
+          this.hidden=true;
+        }
       }
+
       this.logementsList();
     } else 
       this.hidden = true;
